@@ -1,0 +1,29 @@
+bibentry(bibtype = "Article",
+  title        = "A multilevel statistical toolkit to study animal social networks: the Animal Network Toolkit Software (ANTs) R package",
+  author       = c(person(given = "Sebastian",
+                          family = "Sosa"),
+                   person(given = "Ivan",
+                          family = "Puga-Gonzalez"),
+                   person(given = "Fenghe",
+                          family = "Hu"),
+                   person(given = "Jerome",
+                          family = "Pansanel"),
+                  person(given = "Xiaohua",
+                          family = "Xie"),
+                  person(given = "Cedric",
+                          family = "Sueur")),
+                          
+  journal      = "Scientific reports",
+  year         = "2020",
+  volume       = "10",
+  number       = "1",
+  pages        = "1--8",
+  doi          = "10.1038/s41598-020-69265-8",
+
+  header       = "To cite ANTs in publications use:",
+  textVersion  =
+  paste("Sosa, S., Puga-Gonzalez, I., Hu, F., Pansanel, J., Xie, X., & Sueur, C.(2020).",
+        "A multilevel statistical toolkit to study animal social networks: the Animal Network Toolkit Software (ANTs) R package.",
+        "Scientific reports.",
+        "doi:10.1038/s41598-020-69265-8")
+)
