@@ -27,9 +27,9 @@ List list_to_df(List a) {
 
   StringVector row_names(sample_row.length());
   for (int i = 0; i < sample_row.length(); ++i) {
-    char name[11];
-    sprintf(&(name[0]), "%d", i);
-    row_names(i) = name;
+    //char name[11];
+    //sprintf(&(name[0]), "%d", i);
+    row_names(i) = i;
   }
   returned_frame.attr("row.names") = row_names;
 
