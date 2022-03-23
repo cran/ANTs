@@ -20,21 +20,20 @@
 #' @param ctrl a numeric vector indicating the control factors.
 #' @param nperm an integer indicating the number of permutations.
 #' @param progress a boolean indicating if the permutation process must be visible.
-#' @param method a string indicating the association index to compute:
+#' @param index a string indicating the association index to compute:
 #' \itemize{
 #' \item 'sri' for Simple ratio index: \eqn{x/x+yAB+yA+yB}
 #' \item 'hw' for Half-weight index: \eqn{x/x+yAB+1/2(yA+yB)}
 #' \item 'sr' for Square root index:\eqn{x/sqr((x+yAB+yA)(x+yAB+yB))}
 #' }
-#' @return list of square association index matrices. 
 #' @description Warning, the original function (Farine 2017) uses a control factor, the number of focals and the ids of the focals.
 #' @references Farine, D. R. (2017). A guide to null models for animal social network analysis. Methods in ecology and evolution, 8(10), 1309-1320.
 #' @references Sosa, S. (2018). Social Network Analysis, \emph{in}: Encyclopedia of Animal Cognition and Behavior. Springer.
 #' @examples
 #' head(sim.focal.undirected)
-#' t=perm.ds.focal(sim.focal.undirected,focal=3,ctrl=1,alters=4,nperm=10,progress=TRUE,method='sri')
+#' t=perm.ds.focal(sim.focal.undirected,focal=3,ctrl=1,alters=4,nperm=10,progress=TRUE,index='sri')
 
-perm.ds.focal <- function(df, focal, ctrl = NULL, alters, nperm, progress = T, method = "sri") {
+perm.ds.focal <- function(df, focal, ctrl = NULL, alters, nperm, progress = T, index = "sri") {
   ## check for the presence of control arguments
   if (is.null(ctrl)) {
     stop("Argument ctrl cannot be empty")
@@ -45,22 +44,22 @@ perm.ds.focal <- function(df, focal, ctrl = NULL, alters, nperm, progress = T, m
   }
   ## argument df is a single dataframe, perform permutations
   if (test == "df ok") {
-    result <- perm.dataStream.focal(df = df, focal = focal, scan = ctrl, alters = alters, nperm = nperm, progress = progress, method = method)
+    result <- perm.dataStream.focal(df = df, focal = focal, scan = ctrl, alters = alters, nperm = nperm, progress = progress, index = index)
     attr(result, "ANT") <- "ANT data stream focal sampling single matrix"
     attr(result, "focal") <- focal
     attr(result, "ctrl") <- ctrl
     attr(result, "alters") <- alters
-    attr(result, "method") <- method
+    attr(result, "method") <- index
     return(result)
   }
   ## argument df is a list of dataframes, perform permutations in each element of the list
   if (test == "df list ok") {
-    result <- lapply(df, perm.dataStream.focal, focal = focal, scan = ctrl, alters = alters, nperm = nperm, progress = progress, method = method)
+    result <- lapply(df, perm.dataStream.focal, focal = focal, scan = ctrl, alters = alters, nperm = nperm, progress = progress, index = index)
     attr(result, "ANT") <- "ANT data stream focal sampling multiple matrices"
     attr(result, "focal") <- focal
     attr(result, "ctrl") <- ctrl
     attr(result, "alters") <- alters
-    attr(result, "method") <- method
+    attr(result, "method") <- index
     return(result)
   }
 }

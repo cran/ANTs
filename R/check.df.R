@@ -22,7 +22,6 @@ check.df <- function(df) {
   if (is.data.frame(df)) {
     return("df ok")
   }
-
   # Check if argument df is a list of dataframes----------------------
   if (!is.data.frame(df) & is.list(df)) {
     if (all(unlist(lapply(df, is.data.frame)))) {

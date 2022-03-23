@@ -4,7 +4,7 @@
 \alias{perm.ds.grp}
 \title{Data stream permutation for association data}
 \usage{
-perm.ds.grp(df, scan, ctrlf = NULL, method = "sri", perm, progress = TRUE)
+perm.ds.grp(df, scan, ctrlf = NULL, index = "sri", nperm, progress = TRUE)
 }
 \arguments{
 \item{df}{A data frame.The data frame must have a column named 'ID'.}
@@ -13,14 +13,14 @@ perm.ds.grp(df, scan, ctrlf = NULL, method = "sri", perm, progress = TRUE)
 
 \item{ctrlf}{A confounding factor by which to control group associations.}
 
-\item{method}{Which type of index of associations to calculate:
+\item{index}{Which type of index of associations to calculate:
 \itemize{
 \item 'sri' for Simple ratio index: \eqn{x \div x+yAB+yA+yB}
-\item 'hw' for Half-weight index: \eqn{x/x+yAB+1/2(yA+yB)}
-\item 'sr' for Square root index:\eqn{x/sqr((x+yAB+yA)(x+yAB+yB))}
+\item 'hwi' for Half-weight index: \eqn{x/x+yAB+1/2(yA+yB)}
+\item 'sqri' for Square root index:\eqn{x/sqr((x+yAB+yA)(x+yAB+yB))}
 }}
 
-\item{perm}{number of permutations to perform.}
+\item{nperm}{number of permutations to perform.}
 
 \item{progress}{a boolean indicating if the permutation process must be visible.}
 }
@@ -35,7 +35,7 @@ Data stream permutation is a pre-network permutation approach. It is used on ass
 }
 \examples{
 head(sim.grp)
-t=perm.ds.grp(df = sim.grp, scan ='location', ctrlf ='time', perm = 10, method = 'sri')
+t=perm.ds.grp(df = sim.grp, scan ='location', ctrlf ='time', nperm = 10, index = 'sri')
 }
 \references{
 Whitehead, H. A. L. (1997). Analysing animal social structure. Animal behaviour, 53(5), 1053-1067.

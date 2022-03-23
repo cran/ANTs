@@ -39,7 +39,7 @@
 #' @examples
 #' t=met.strength(sim.m,sim.df,1) # Computing network metric
 #' t=perm.net.nl(t,labels='age',rf=NULL,nperm=10,progress=FALSE) # Node label permutations
-#' r.lm=stat.lm(t,formula = strength ~ sex,progress=FALSE) # Permuted LM
+#' r.lm=stat.lm(t,formula = strength ~ age,progress=FALSE) # Permuted LM
 #' @seealso \code{\link[stats]{lm}}
 
 stat.lm <- function(ant, formula, oda, progress = TRUE, method = "qr", model = TRUE,
@@ -312,7 +312,7 @@ stat.lm <- function(ant, formula, oda, progress = TRUE, method = "qr", model = T
   # Merge list of coefficients
   results <- do.call("rbind", results)
   # Create an object with the original model, the permuted coefficients, the permutation numbers that require repermutations
-  result <- list("Original.model" = t, "permutations" = results, "errors" = tmp.env$error)
+  result <- list("Original.model" = t, "permutations" =  as.data.frame(results), "errors" = tmp.env$error)
   attr(result, "class") <- "ant lm"
   attr(result, "formula") <- paste(format(formula))
   cat("\n")

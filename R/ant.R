@@ -31,12 +31,13 @@
 #' \item a vector of the permutations that generates errors and for which new permutations were performed.
 #' }
 #' @author Sebastian Sosa, Ivan Puga-Gonzalez.
+#' @export
 #' @examples
 #' t=met.strength(sim.m,sim.df,1) # Computing network metric
 #' t=perm.net.nl(t,labels='age',rf=NULL,nperm=10,progress=FALSE) # Node label permutations
 #' r.c=stat.cor(t,'age','strength',progress=FALSE) # Permuted correlation test
 #' r=ant(r.c)
-setGeneric(name = "ant", ant <- function(x, progress = TRUE) {
+setGeneric(name = "ant", ant <- function(x, progress = FALSE) {
   op <- par(no.readonly = TRUE)
   on.exit(par(op))
   # Check if argument x is an ANTs object
@@ -46,9 +47,6 @@ setGeneric(name = "ant", ant <- function(x, progress = TRUE) {
       # Separate correlation from the original data (first value) from the permuted ones----------------------
       obs <- x[, 1][1]
       v_perm <- x[, 1][-1]
-
-      # Create object to return----------------------
-      diag <- list()
 
       # Compute permuted p-values----------------------
       p <- stat.p(c(obs,v_perm))
@@ -61,35 +59,11 @@ setGeneric(name = "ant", ant <- function(x, progress = TRUE) {
 
       # Create dataframe with permuted p-values, 95% confidence interval and mean posterior distribution----------------------
       df <- as.data.frame(cbind(obs, p[1], p[2], p[3], stat.ci[1], stat.ci[2], m))
-      colnames(df) <- (c("Observed correlation", "p.left", "p.right",  "p.one.side", "95ci lower", "95ci upper", "mean"))
+      colnames(df) <- (c("Observed correlation", "p.left", "p.right",  "p.two.sides", "95ci lower", "95ci upper", "mean"))
       rownames(df) <- c("statistics")
-      diag$statistics <- df
+      diag <- df
 
-      # Create posterior distribution plots----------------------
-      par(bg = "gray63")
-      # Is the observed correlation superior to the posterior mean
-      if (obs > m) {
-        h <- suppressWarnings(hist(v_perm, breaks = length(v_perm), xaxt = "n", plot = FALSE))
-        cuts <- cut(h$breaks, c(obs, Inf))
-        cuts <- ifelse(is.na(cuts), "gray10", "gray25")
-        plot(h, col = cuts, border = cuts, xlab = paste(attributes(x)$comment), main = paste(attributes(x)$comment, "posterior distribution"), xaxt = "n")
-        axis(1, pos = -30)
-        mtext(1, text = round(obs, digit = 3), at = obs, col = "white", line = -0.2)
-        abline(v = obs, col = "white")
-        legend("topright", legend = "observed value", text.col = "white", box.lty = 0)
-
-      }
-      else {
-        h <- suppressWarnings(hist(v_perm, breaks = length(v_perm), xaxt = "n", plot = FALSE))
-        cuts <- cut(h$breaks, c(obs, Inf))
-        cuts <- ifelse(is.na(cuts), "gray25", "gray10")
-        plot(h, col = cuts, border = cuts, xlab = paste(attributes(x)$comment), main = paste(attributes(x)$comment, "posterior distribution"), xaxt = "n")
-        axis(1, pos = -10)
-        mtext(1, text = round(obs, digit = 3), at = obs, col = "white", line = -0.2)
-        abline(v = obs, col = "white")
-        legend("topright", legend = "observed value", text.col = "white", box.lty = 0)
-
-      }
+      vis.post.distribution(c(obs, v_perm), legend = FALSE, main = paste("Posterior distribution of ", attributes(r.c)$comment, sep = ""))
       
       # Print dataframe & return data frame and plot----------------------
       if(progress){
@@ -107,12 +81,11 @@ setGeneric(name = "ant", ant <- function(x, progress = TRUE) {
       v <- do.call("rbind", x[[2]][, 1])
       # Separate correlation from the original data (first value) from the permuted ones----------------------
       obs <- x[[1]]$statistic
-      v_perm <- v[, 1]
-
-      # Create object to return----------------------      
-      diag <- list()
+      v_perm <- (x$permutation)
+ 
 
       # Compute permuted p-values----------------------
+      v_perm <- unlist(x$permutation)
       p <- stat.p(c(obs,v_perm))
       
       # Compute confidence interval--------------------
@@ -123,36 +96,11 @@ setGeneric(name = "ant", ant <- function(x, progress = TRUE) {
       
       # Create dataframe with permuted p-values, 95% confidence interval and mean posterior distribution----------------------     
       df <- as.data.frame(cbind(obs, p[1], p[2], p[3], stat.ci[1], stat.ci[2], m))
-      colnames(df) <- (c("t observed", "p.left","p.right",  "p.one.side", "95ci lower", "95ci upper", "mean"))
+      colnames(df) <- (c("t observed", "p.left","p.right",  "p.two.sides", "95ci lower", "95ci upper", "mean"))
       rownames(df) <- c("statistics")
-      diag$statistics <- df
+      diag<- df
 
-      # Create posterior distribution plots----------------------
-      par(bg = "gray63")
-      # Is the observed correlation superior to the posterior mean
-      if (obs > m) {
-        h <- suppressWarnings(hist(v_perm, breaks = length(v_perm), xaxt = "n", plot = FALSE))
-        cuts <- cut(h$breaks, c(obs, Inf))
-        cuts <- ifelse(is.na(cuts), "gray10", "gray25")
-        plot(h, xlab = "t coefficient", main = paste("Student t posterior distribution for", paste(attr(x, "alternative")), paste(attr(x, "comment")), "permuted test"), xaxt = "n", col = cuts, border = cuts)
-        axis(1, pos = -10)
-        mtext(1, text = round(obs, digit = 2), at = obs, col = "white", line = -0.2)
-        abline(v = obs, col = "white")
-        legend("topright", legend = "observed value", text.col = "white", box.lty = 0)
-
-      }
-      else {
-        h <- suppressWarnings(hist(v_perm, breaks = length(v_perm), xaxt = "n", plot = FALSE))
-        cuts <- cut(h$breaks, c(obs, Inf))
-        cuts <- ifelse(is.na(cuts), "gray25", "gray10")
-        plot(h, xlab = "t coefficient", main = paste("Student t posterior distribution for", paste(attr(x, "alternative")), paste(attr(x, "comment")), "permuted test"), xaxt = "n", col = cuts, border = cuts)
-        axis(1, pos = -10)
-        mtext(1, text = round(obs, digit = 2), at = obs, col = "white", line = -0.2)
-        abline(v = obs, col = "white")
-        legend("topright", legend = "observed value", text.col = "white", box.lty = 0)
-
-      }
-      
+      vis.post.distribution(c(obs, v_perm), legend = FALSE, main = paste("Posterior distribution of two sided t statistic"))
 
       # Print dataframe & return data frame and plot----------------------
       if(progress){
@@ -172,8 +120,7 @@ setGeneric(name = "ant", ant <- function(x, progress = TRUE) {
 
       # Extract model coefficients----------------------
       obs <- x$Original.model$coefficients[, 1]
-      diag <- list()
-
+      
       # Extract permuted coefficients----------------------
       v_perms <- x$permutations
 
@@ -189,28 +136,24 @@ setGeneric(name = "ant", ant <- function(x, progress = TRUE) {
         )
       }
       stat <- do.call("rbind", stat)
-      colnames(stat) <- c("p.left", "p.rigth",   "p.one.side", "lower.ci", "uper.ci", "mean")
+      colnames(stat) <- c("p.left", "p.rigth",   "p.two.sides", "lower.ci", "uper.ci", "mean")
       rownames(stat) <- colnames(v_perms)
 
       # Add permuted p-values, 95% confidence interval and mean posterior distribution to original model----------------------
       s$coefficients <- cbind(s$coefficients, stat)
-
-      # Create posterior distribution plots----------------------
-      post.dist <- post.dist(v_perms, Obs = obs)
 
       # Extract model family and formula----------------------
       attr(x$Original.model, "family") <- attributes(x)$family
       attr(x$Original.model, "formula") <- attributes(x)$formula
 
       # Model diagnostic (qqplot and fitted values versus residuals)----------------------
-      diagnostic <- stat.model.diag(x$Original.model)
+      stat.model.diag(x$Original.model)
 
-      # Return results 1) model summary (with permuted statistics), 2) model diagnostic and 3) posterior distributions----------------------
-      diag[[1]] <- s
-      diag[[2]] <- diagnostic
-      diag[[3]] <- post.dist
-      names(diag) <- c("model", "model.diagnostic", "post.dist")
+      vis.post.distribution(as.data.frame(rbind(obs, v_perms)), legend = FALSE)
       
+      
+      # Return results 1) model summary (with permuted statistics), 2) model diagnostic and 3) posterior distributions----------------------
+      diag<- s
       invisible(return(diag))
     }
 
@@ -219,9 +162,6 @@ setGeneric(name = "ant", ant <- function(x, progress = TRUE) {
       # Separate correlation from the original data (first value) from the permuted ones----------------------
       obs <- x[, 1][1]
       v_perm <- x[, 1][-1]
-
-      # Create object to return----------------------      
-      diag <- list()
 
       # Compute permuted p-values----------------------
       p <- stat.p(c(obs,v_perm))
@@ -234,9 +174,9 @@ setGeneric(name = "ant", ant <- function(x, progress = TRUE) {
 
       # Create dataframe with permuted p-values, 95% confidence interval and mean posterior distribution----------------------     
       df <- as.data.frame(cbind(obs, p[1], p[2], p[3], stat.ci[1], stat.ci[2], m))
-      colnames(df) <- (c("Observed correlation", "p.left", "p.right",  "p.one.side", "95ci lower", "95ci upper", "mean"))
+      colnames(df) <- (c("Observed correlation", "p.left", "p.right",  "p.two.sides", "95ci lower", "95ci upper", "mean"))
       rownames(df) <- c("statistics")
-      diag$statistics <- df
+      diag<- df
 
       # Create posterior distribution plots----------------------
       par(bg = "gray63")
@@ -283,28 +223,24 @@ setGeneric(name = "ant", ant <- function(x, progress = TRUE) {
 
       # Create dataframe with permuted p-values, 95% confidence interval and mean posterior distribution----------------------  
       stat <- NULL
-      for (a in 1:ncol(v_perms)) {
-        r <- stat.ci(v_perms[, a])
-        p <- stat.p(c(obs[,a],v_perms[, a]))
+      for (a in 1:ncol(x)) {
+        r <- stat.ci(x[-1, a])
+        p <- stat.p(x[, a])
         stat[[a]] <- data.frame(
           p[1], p[2], p[3],
           r[1], r[2],
-          mean(v_perms[, a])
+          mean(x[-1, a])
         )
       }
       stat <- do.call("rbind", stat)
-      colnames(stat) <- c("p.left","p.rigth",  "p.one.side","lower.ci", "uper.ci", "mean")
-      rownames(stat) <- colnames(v_perms)
+      colnames(stat) <- c("p.left","p.rigth", "p.two.sides","lower.ci", "uper.ci", "mean")
+      rownames(stat) <- colnames(x)
 
      # Create posterior distribution plots----------------------
-      post.dist <- post.dist(v_perms, obs)
+      vis.post.distribution(x, legend = FALSE)
 
       # Return results 1) permuted statistics and 2) posterior distributions----------------------
-      diag <- list()
-      diag[[1]] <- stat
-      diag[[2]] <- post.dist
-      names(diag) <- c("diagnostics", "post.dist")
-      
+      diag <- stat
       invisible(return(diag))
     }
     stop("Argument x is not an object of class 'ant cor', 'ant t-test', 'ant lm', 'ant glm', 'ant glmm' or a data frame.")
@@ -330,7 +266,7 @@ setGeneric(name = "ant", ant <- function(x, progress = TRUE) {
       
       # Create dataframe with permuted p-values, 95% confidence interval and mean posterior distribution----------------------
       df <- as.data.frame(cbind(obs, p[1], p[2], p[3], stat.ci[1], stat.ci[2], m))
-      colnames(df) <- (c("Observed correlation", "p.left", "p.right", "p.one.side", "95ci lower", "95ci upper", "mean"))
+      colnames(df) <- (c("Observed correlation", "p.left", "p.right", "p.two.sides", "95ci lower", "95ci upper", "mean"))
       rownames(df) <- c("statistics")
       diag$statistics <- df
 

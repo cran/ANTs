@@ -11,9 +11,6 @@ met.lpcentEvcent(M, binary = FALSE)
 
 \item{binary}{if if \emph{true}  then calculate the directed binary version of Laplacian centrality}
 }
-\value{
-a numeric vector.
-}
 \description{
 Calculate the directed weighted or binary Laplacian centrality for each verteces.
 }

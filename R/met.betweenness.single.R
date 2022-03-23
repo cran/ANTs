@@ -14,7 +14,6 @@
 
 #' @title Betweenness centrality
 #' @description Compute node betweenness
-#' @return a numeric vector.
 #' @keywords internal
 
 met.betweenness.single <- function(m, binary = FALSE, shortest.weight = FALSE, normalization = TRUE, sym = TRUE, out = TRUE, df = NULL, dfid = NULL) {
@@ -68,10 +67,12 @@ met.betweenness.single <- function(m, binary = FALSE, shortest.weight = FALSE, n
       }
       # Order data frame according to argument dfid
       col.id <- df.col.findId(df, dfid)
-      df <- df[match(colnames(m), df[, col.id]), ]
+      df <- merge.met(vec = result, names = colnames(m), df = df, dfid = col.id, met = "betweenness")
+      return(df)
+    }else{
+      # Add vector of network metrics in a new column
+      df[, ncol(df) + 1] <- result
+      return(df)
     }
-    # Add vector of network metrics in a new column
-    df[, ncol(df) + 1] <- result
-    return(df)
   }
 }

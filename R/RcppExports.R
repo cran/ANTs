@@ -2,19 +2,19 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 metric_global_shortestPath <- function(disMap) {
-    .Call('_ANTs_metric_global_shortestPath', PACKAGE = 'ANTs', disMap)
+    .Call(`_ANTs_metric_global_shortestPath`, disMap)
 }
 
 metric_global_shortestDetails <- function(disMap) {
-    .Call('_ANTs_metric_global_shortestDetails', PACKAGE = 'ANTs', disMap)
+    .Call(`_ANTs_metric_global_shortestDetails`, disMap)
 }
 
 metric_node_betweeness <- function(disMap) {
-    .Call('_ANTs_metric_node_betweeness', PACKAGE = 'ANTs', disMap)
+    .Call(`_ANTs_metric_node_betweeness`, disMap)
 }
 
 metric_global_triangle <- function(disMap) {
-    .Call('_ANTs_metric_global_triangle', PACKAGE = 'ANTs', disMap)
+    .Call(`_ANTs_metric_global_triangle`, disMap)
 }
 
 #' @title Association indexes
@@ -32,7 +32,7 @@ metric_global_triangle <- function(disMap) {
 #' @author Sebastian Sosa, Ivan Puga-Gonzales.
 #' @keywords internal
 assoc_mat <- function(Mgbi, method, return_denom = FALSE) {
-    .Call('_ANTs_assoc_mat', PACKAGE = 'ANTs', Mgbi, method, return_denom)
+    .Call(`_ANTs_assoc_mat`, Mgbi, method, return_denom)
 }
 
 #' @title Association indexes
@@ -50,7 +50,7 @@ assoc_mat <- function(Mgbi, method, return_denom = FALSE) {
 #' @author Sebastian Sosa, Ivan Puga-Gonzales.
 #' @keywords internal
 assoc_mat_full <- function(Mgbi, method) {
-    .Call('_ANTs_assoc_mat_full', PACKAGE = 'ANTs', Mgbi, method)
+    .Call(`_ANTs_assoc_mat_full`, Mgbi, method)
 }
 
 #' @title Association indexes for one individual
@@ -69,14 +69,14 @@ assoc_mat_full <- function(Mgbi, method) {
 #' @author Sebastian Sosa, Ivan Puga-Gonzales.
 #' @keywords internal
 assoc_mat_one_id <- function(Mgbi, id, method) {
-    .Call('_ANTs_assoc_mat_one_id', PACKAGE = 'ANTs', Mgbi, id, method)
+    .Call(`_ANTs_assoc_mat_one_id`, Mgbi, id, method)
 }
 
 #' @title Merge two data frames
 #' @description Merge two data frames keeping the structure of the first one
 #' @keywords internal
 df_merge <- function(df1, df2) {
-    .Call('_ANTs_df_merge', PACKAGE = 'ANTs', df1, df2)
+    .Call(`_ANTs_df_merge`, df1, df2)
 }
 
 #' @title Group by individual matrix.
@@ -90,7 +90,7 @@ df_merge <- function(df1, df2) {
 #' @author Sebastian Sosa, Ivan Puga-Gonzales
 #' @keywords internal
 df_to_gbi <- function(d, col_scan, col_id, uIds, uScans) {
-    .Call('_ANTs_df_to_gbi', PACKAGE = 'ANTs', d, col_scan, col_id, uIds, uScans)
+    .Call(`_ANTs_df_to_gbi`, d, col_scan, col_id, uIds, uScans)
 }
 
 #' @title Edge list to matrix
@@ -102,11 +102,11 @@ df_to_gbi <- function(d, col_scan, col_id, uIds, uScans) {
 #' @author Sebastian Sosa, Ivan Puga-Gonzales.
 #' @keywords internal
 edgl_to_matrix <- function(df, sym) {
-    .Call('_ANTs_edgl_to_matrix', PACKAGE = 'ANTs', df, sym)
+    .Call(`_ANTs_edgl_to_matrix`, df, sym)
 }
 
 euclidean <- function(vec) {
-    .Call('_ANTs_euclidean', PACKAGE = 'ANTs', vec)
+    .Call(`_ANTs_euclidean`, vec)
 }
 
 #' @title Empty group by individual matrix
@@ -120,14 +120,14 @@ euclidean <- function(vec) {
 #' @author Sebastian Sosa, Ivan Puga-Gonzales.
 #' @keywords internal
 gbi_createEmpty <- function(d, col_scan, col_id) {
-    .Call('_ANTs_gbi_createEmpty', PACKAGE = 'ANTs', d, col_scan, col_id)
+    .Call(`_ANTs_gbi_createEmpty`, d, col_scan, col_id)
 }
 
 #' @title Merge list of data frames 
 #' @description Merge a list of  data frames keeping the structure of the first one
 #' @keywords internal
 ldf_merge <- function(ldf) {
-    .Call('_ANTs_ldf_merge', PACKAGE = 'ANTs', ldf)
+    .Call(`_ANTs_ldf_merge`, ldf)
 }
 
 #' @title Merge columns of a List of data frames.
@@ -139,7 +139,7 @@ ldf_merge <- function(ldf) {
 #' @author Sebastian Sosa, Ivan Puga-Gonzales.
 #' @keywords internal
 listDf_merge_single_column <- function(df, ldf, col) {
-    .Call('_ANTs_listDf_merge_single_column', PACKAGE = 'ANTs', df, ldf, col)
+    .Call(`_ANTs_listDf_merge_single_column`, df, ldf, col)
 }
 
 #' @title Lapply function
@@ -150,7 +150,7 @@ listDf_merge_single_column <- function(df, ldf, col) {
 #' @author This function have been copy from Rcpp gallery: XXXX
 #' @keywords internal
 list_lapply <- function(input, f) {
-    .Call('_ANTs_list_lapply', PACKAGE = 'ANTs', input, f)
+    .Call(`_ANTs_list_lapply`, input, f)
 }
 
 #' @title List to data frame.
@@ -159,7 +159,7 @@ list_lapply <- function(input, f) {
 #' @return A data frame with the same number of columns as the list length.
 #' @keywords internal
 list_to_df <- function(a) {
-    .Call('_ANTs_list_to_df', PACKAGE = 'ANTs', a)
+    .Call(`_ANTs_list_to_df`, a)
 }
 
 #' @title Matrix binarization.
@@ -169,11 +169,11 @@ list_to_df <- function(a) {
 #' @author Sebastian Sosa, Ivan Puga-Gonzales.
 #' @keywords internal
 mat_binaryzation <- function(M) {
-    .Call('_ANTs_mat_binaryzation', PACKAGE = 'ANTs', M)
+    .Call(`_ANTs_mat_binaryzation`, M)
 }
 
 mat_col_extract <- function(m, x) {
-    .Call('_ANTs_mat_col_extract', PACKAGE = 'ANTs', m, x)
+    .Call(`_ANTs_mat_col_extract`, m, x)
 }
 
 #' @title Binary version of column sum.
@@ -183,7 +183,7 @@ mat_col_extract <- function(m, x) {
 #' @author Sebastian Sosa, Ivan Puga-Gonzales.
 #' @keywords internal
 mat_col_sumsBinary <- function(m) {
-    .Call('_ANTs_mat_col_sumsBinary', PACKAGE = 'ANTs', m)
+    .Call(`_ANTs_mat_col_sumsBinary`, m)
 }
 
 #' @title From Column Sums.
@@ -193,7 +193,7 @@ mat_col_sumsBinary <- function(m) {
 #' @author Sebastian Sosa, Ivan Puga-Gonzales.
 #' @keywords internal
 mat_cols_sums <- function(m) {
-    .Call('_ANTs_mat_cols_sums', PACKAGE = 'ANTs', m)
+    .Call(`_ANTs_mat_cols_sums`, m)
 }
 
 #' @title Dimensions of a matrix
@@ -203,15 +203,15 @@ mat_cols_sums <- function(m) {
 #' @author Sebastian Sosa, Ivan Puga-Gonzales.
 #' @keywords internal
 mat_dim <- function(m) {
-    .Call('_ANTs_mat_dim', PACKAGE = 'ANTs', m)
+    .Call(`_ANTs_mat_dim`, m)
 }
 
 mat_erase_col <- function(M, a) {
-    .Call('_ANTs_mat_erase_col', PACKAGE = 'ANTs', M, a)
+    .Call(`_ANTs_mat_erase_col`, M, a)
 }
 
 mat_fill_upper <- function(m) {
-    .Call('_ANTs_mat_fill_upper', PACKAGE = 'ANTs', m)
+    .Call(`_ANTs_mat_fill_upper`, m)
 }
 
 #' @title Matrix filtering
@@ -223,7 +223,7 @@ mat_fill_upper <- function(m) {
 #' @author Sebastian Sosa, Ivan Puga-Gonzales.
 #' @keywords internal
 mat_filter <- function(m, threshold, replace) {
-    .Call('_ANTs_mat_filter', PACKAGE = 'ANTs', m, threshold, replace)
+    .Call(`_ANTs_mat_filter`, m, threshold, replace)
 }
 
 #' @title Find zeros in a Matrix.
@@ -233,7 +233,7 @@ mat_filter <- function(m, threshold, replace) {
 #' @author Sebastian Sosa, Ivan Puga-Gonzales.
 #' @keywords internal
 mat_find0 <- function(m) {
-    .Call('_ANTs_mat_find0', PACKAGE = 'ANTs', m)
+    .Call(`_ANTs_mat_find0`, m)
 }
 
 #' @title Is square.
@@ -243,11 +243,11 @@ mat_find0 <- function(m) {
 #' @author Sebastian Sosa, Ivan Puga-Gonzales.
 #' @keywords internal
 mat_isSquare <- function(m) {
-    .Call('_ANTs_mat_isSquare', PACKAGE = 'ANTs', m)
+    .Call(`_ANTs_mat_isSquare`, m)
 }
 
 mat_lowertri_to_vec <- function(m, diag) {
-    .Call('_ANTs_mat_lowertri_to_vec', PACKAGE = 'ANTs', m, diag)
+    .Call(`_ANTs_mat_lowertri_to_vec`, m, diag)
 }
 
 #' @title Extract matrix row.
@@ -258,7 +258,7 @@ mat_lowertri_to_vec <- function(m, diag) {
 #' @author Sebastian Sosa, Ivan Puga-Gonzales.
 #' @keywords internal
 mat_row_extract <- function(m, x) {
-    .Call('_ANTs_mat_row_extract', PACKAGE = 'ANTs', m, x)
+    .Call(`_ANTs_mat_row_extract`, m, x)
 }
 
 #' @title From row Sums.
@@ -268,7 +268,7 @@ mat_row_extract <- function(m, x) {
 #' @author Sebastian Sosa, Ivan Puga-Gonzales.
 #' @keywords internal
 mat_rows_sums <- function(x) {
-    .Call('_ANTs_mat_rows_sums', PACKAGE = 'ANTs', x)
+    .Call(`_ANTs_mat_rows_sums`, x)
 }
 
 #' @title Binary version of row sum.
@@ -278,43 +278,51 @@ mat_rows_sums <- function(x) {
 #' @author Sebastian Sosa, Ivan Puga-Gonzales.
 #' @keywords internal
 mat_rows_sumsBinary <- function(x) {
-    .Call('_ANTs_mat_rows_sumsBinary', PACKAGE = 'ANTs', x)
+    .Call(`_ANTs_mat_rows_sumsBinary`, x)
 }
 
 mat_row_wise_multiplication <- function(m, v) {
-    .Call('_ANTs_mat_row_wise_multiplication', PACKAGE = 'ANTs', m, v)
+    .Call(`_ANTs_mat_row_wise_multiplication`, m, v)
 }
 
 mat_sym_by_lowertri <- function(M) {
-    .Call('_ANTs_mat_sym_by_lowertri', PACKAGE = 'ANTs', M)
+    .Call(`_ANTs_mat_sym_by_lowertri`, M)
 }
 
 mat_symetrization <- function(M) {
-    .Call('_ANTs_mat_symetrization', PACKAGE = 'ANTs', M)
+    .Call(`_ANTs_mat_symetrization`, M)
 }
 
 mat_to_vec <- function(M, ncol) {
-    .Call('_ANTs_mat_to_vec', PACKAGE = 'ANTs', M, ncol)
+    .Call(`_ANTs_mat_to_vec`, M, ncol)
 }
 
 met_assor_cat <- function(M, att) {
-    .Call('_ANTs_met_assor_cat', PACKAGE = 'ANTs', M, att)
+    .Call(`_ANTs_met_assor_cat`, M, att)
 }
 
 met_degree <- function(M) {
-    .Call('_ANTs_met_degree', PACKAGE = 'ANTs', M)
+    .Call(`_ANTs_met_degree`, M)
 }
 
 met_density <- function(M) {
-    .Call('_ANTs_met_density', PACKAGE = 'ANTs', M)
+    .Call(`_ANTs_met_density`, M)
 }
 
 met_eigen <- function(M, eps = 0.000001, maxiter = 1000L) {
-    .Call('_ANTs_met_eigen', PACKAGE = 'ANTs', M, eps, maxiter)
+    .Call(`_ANTs_met_eigen`, M, eps, maxiter)
+}
+
+met_indegree <- function(M) {
+    .Call(`_ANTs_met_indegree`, M)
 }
 
 met_nalters <- function(M) {
-    .Call('_ANTs_met_nalters', PACKAGE = 'ANTs', M)
+    .Call(`_ANTs_met_nalters`, M)
+}
+
+met_outdegree <- function(M) {
+    .Call(`_ANTs_met_outdegree`, M)
 }
 
 #' @title strength
@@ -330,15 +338,15 @@ met_nalters <- function(M) {
 #' @references Sosa, S. (\emph{in press}). Social Network Analysis, \emph{in}: Encyclopedia of Animal Cognition and Behavior. Springer.
 #' @keywords internal
 met_strength <- function(M) {
-    .Call('_ANTs_met_strength', PACKAGE = 'ANTs', M)
+    .Call(`_ANTs_met_strength`, M)
 }
 
 met_sum_egos_strength <- function(M) {
-    .Call('_ANTs_met_sum_egos_strength', PACKAGE = 'ANTs', M)
+    .Call(`_ANTs_met_sum_egos_strength`, M)
 }
 
 na_omit <- function(x) {
-    .Call('_ANTs_na_omit', PACKAGE = 'ANTs', x)
+    .Call(`_ANTs_na_omit`, x)
 }
 
 #' @title Data Stream gambit of the group Permutations without control factor.
@@ -355,7 +363,7 @@ na_omit <- function(x) {
 #' @references Sosa, S. (\emph{in press}). Social Network Analysis, \emph{in}: Encyclopedia of Animal Cognition and Behavior. Springer.
 #' @keywords internal
 perm_dataStream1 <- function(M, nperm, progress, method) {
-    .Call('_ANTs_perm_dataStream1', PACKAGE = 'ANTs', M, nperm, progress, method)
+    .Call(`_ANTs_perm_dataStream1`, M, nperm, progress, method)
 }
 
 #' @title Data Stream gambit of the group Permutations without control factor.
@@ -372,7 +380,7 @@ perm_dataStream1 <- function(M, nperm, progress, method) {
 #' @references Sosa, S. (\emph{in press}). Social Network Analysis, \emph{in}: Encyclopedia of Animal Cognition and Behavior. Springer.
 #' @keywords internal
 perm_dataStream1_focal <- function(M, M2, nperm, progress, method) {
-    .Call('_ANTs_perm_dataStream1_focal', PACKAGE = 'ANTs', M, M2, nperm, progress, method)
+    .Call(`_ANTs_perm_dataStream1_focal`, M, M2, nperm, progress, method)
 }
 
 #' @title Data Stream gambit of the group Permutations with control factor.
@@ -389,7 +397,7 @@ perm_dataStream1_focal <- function(M, M2, nperm, progress, method) {
 #' @references Sosa, S. (\emph{in press}). Social Network Analysis, \emph{in}: Encyclopedia of Animal Cognition and Behavior. Springer.
 #' @keywords internal
 perm_dataStream_ControlFactor <- function(GBIList, M, nperm, GBIIndexes, CumSizesGbis, progress, method) {
-    .Call('_ANTs_perm_dataStream_ControlFactor', PACKAGE = 'ANTs', GBIList, M, nperm, GBIIndexes, CumSizesGbis, progress, method)
+    .Call(`_ANTs_perm_dataStream_ControlFactor`, GBIList, M, nperm, GBIIndexes, CumSizesGbis, progress, method)
 }
 
 #' @title Vectorize matrix permutation
@@ -402,25 +410,25 @@ perm_dataStream_ControlFactor <- function(GBIList, M, nperm, GBIIndexes, CumSize
 #' @author Sebastian Sosa.
 #' @keywords internal
 perm_matVec <- function(vec, n, rand) {
-    .Call('_ANTs_perm_matVec', PACKAGE = 'ANTs', vec, n, rand)
+    .Call(`_ANTs_perm_matVec`, vec, n, rand)
 }
 
 perm_mat_col_row <- function(M, ncol, rand) {
-    .Call('_ANTs_perm_mat_col_row', PACKAGE = 'ANTs', M, ncol, rand)
+    .Call(`_ANTs_perm_mat_col_row`, M, ncol, rand)
 }
 
 #' @title Edgelist weigths permutations
 #' @description Post-network permutations on links weights.
 #' @keywords internal
 perm_net_weigths <- function(df, sym, nperm, progress) {
-    .Call('_ANTs_perm_net_weigths', PACKAGE = 'ANTs', df, sym, nperm, progress)
+    .Call(`_ANTs_perm_net_weigths`, df, sym, nperm, progress)
 }
 
 #' @title Node lable permutation with random factors
 #' @description Perorm node label permutation on list of data frames
 #' @keywords internal
 perm_nl_rf <- function(ldf, lables, nperm, progress) {
-    .Call('_ANTs_perm_nl_rf', PACKAGE = 'ANTs', ldf, lables, nperm, progress)
+    .Call(`_ANTs_perm_nl_rf`, ldf, lables, nperm, progress)
 }
 
 #' @title Node label permutations.
@@ -436,7 +444,7 @@ perm_nl_rf <- function(ldf, lables, nperm, progress) {
 #' @references Sosa, S. (\emph{in press}). Social Network Analysis, \emph{in}: Encyclopedia of Animal Cognition and Behavior. Springer.
 #' @keywords internal
 perm_nodeLabels <- function(df, label, nperm, progress) {
-    .Call('_ANTs_perm_nodeLabels', PACKAGE = 'ANTs', df, label, nperm, progress)
+    .Call(`_ANTs_perm_nodeLabels`, df, label, nperm, progress)
 }
 
 #' @title Permute factor vector.
@@ -450,7 +458,7 @@ perm_nodeLabels <- function(df, label, nperm, progress) {
 #' @references Sosa, S. (\emph{in press}). Social Network Analysis, \emph{in}: Encyclopedia of Animal Cognition and Behavior. Springer.
 #' @keywords internal
 perm_vec_factor <- function(vec) {
-    .Call('_ANTs_perm_vec_factor', PACKAGE = 'ANTs', vec)
+    .Call(`_ANTs_perm_vec_factor`, vec)
 }
 
 #' @title Vector permutations.
@@ -465,7 +473,7 @@ perm_vec_factor <- function(vec) {
 #' @references Sosa, S. (\emph{in press}). Social Network Analysis, \emph{in}: Encyclopedia of Animal Cognition and Behavior. Springer.
 #' @keywords internal
 perm_vec_int <- function(x, nperm, progress) {
-    .Call('_ANTs_perm_vec_int', PACKAGE = 'ANTs', x, nperm, progress)
+    .Call(`_ANTs_perm_vec_int`, x, nperm, progress)
 }
 
 #' @title Data Stream gambit of the group Permutations without control factor.
@@ -482,7 +490,7 @@ perm_vec_int <- function(x, nperm, progress) {
 #' @references Sosa, S. (\emph{in press}). Social Network Analysis, \emph{in}: Encyclopedia of Animal Cognition and Behavior. Springer.
 #' @keywords internal
 redo_perm_dataStream1_focal <- function(M, M2, nperm, method) {
-    .Call('_ANTs_redo_perm_dataStream1_focal', PACKAGE = 'ANTs', M, M2, nperm, method)
+    .Call(`_ANTs_redo_perm_dataStream1_focal`, M, M2, nperm, method)
 }
 
 #' @title Data Stream gambit of the group cumulative permutations without control factor.
@@ -497,7 +505,7 @@ redo_perm_dataStream1_focal <- function(M, M2, nperm, method) {
 #' @references Sosa, S. (\emph{in press}). Social Network Analysis, \emph{in}: Encyclopedia of Animal Cognition and Behavior. Springer.
 #' @keywords internal
 redo_perm_dataStream_1 <- function(M, nperm, method) {
-    .Call('_ANTs_redo_perm_dataStream_1', PACKAGE = 'ANTs', M, nperm, method)
+    .Call(`_ANTs_redo_perm_dataStream_1`, M, nperm, method)
 }
 
 #' @title Data Stream gambit of the group cumulative permutations with control factor.
@@ -512,7 +520,7 @@ redo_perm_dataStream_1 <- function(M, nperm, method) {
 #' @references Sosa, S. (\emph{in press}). Social Network Analysis, \emph{in}: Encyclopedia of Animal Cognition and Behavior. Springer.
 #' @keywords internal
 redo_perm_dataStream_ControlFactor <- function(GBIList, M, nperm, CumSizesGbis, method) {
-    .Call('_ANTs_redo_perm_dataStream_ControlFactor', PACKAGE = 'ANTs', GBIList, M, nperm, CumSizesGbis, method)
+    .Call(`_ANTs_redo_perm_dataStream_ControlFactor`, GBIList, M, nperm, CumSizesGbis, method)
 }
 
 #' @title Data Stream gambit of the group cumulative permutations with control factor.
@@ -527,7 +535,7 @@ redo_perm_dataStream_ControlFactor <- function(GBIList, M, nperm, CumSizesGbis, 
 #' @references Sosa, S. (\emph{in press}). Social Network Analysis, \emph{in}: Encyclopedia of Animal Cognition and Behavior. Springer.
 #' @keywords internal
 redo_perm_dataStream_ControlFactor_scd <- function(GBIList, nperm, method) {
-    .Call('_ANTs_redo_perm_dataStream_ControlFactor_scd', PACKAGE = 'ANTs', GBIList, nperm, method)
+    .Call(`_ANTs_redo_perm_dataStream_ControlFactor_scd`, GBIList, nperm, method)
 }
 
 #' @title Data Stream Focal Sampling cumulative permutations without control factor.
@@ -546,27 +554,27 @@ redo_perm_dataStream_ControlFactor_scd <- function(GBIList, nperm, method) {
 #' @references Sosa, S. (\emph{in press}). Social Network Analysis, \emph{in}: Encyclopedia of Animal Cognition and Behavior. Springer.
 #' @keywords internal
 redo_perm_dataStream_focal <- function(df, ldf1, nperm, col_focal, col_alters, lengthList) {
-    .Call('_ANTs_redo_perm_dataStream_focal', PACKAGE = 'ANTs', df, ldf1, nperm, col_focal, col_alters, lengthList)
+    .Call(`_ANTs_redo_perm_dataStream_focal`, df, ldf1, nperm, col_focal, col_alters, lengthList)
 }
 
 test_nm <- function(X) {
-    .Call('_ANTs_test_nm', PACKAGE = 'ANTs', X)
+    .Call(`_ANTs_test_nm`, X)
 }
 
 test_arma <- function(X) {
-    .Call('_ANTs_test_arma', PACKAGE = 'ANTs', X)
+    .Call(`_ANTs_test_arma`, X)
 }
 
 test_nm_conv <- function(X) {
-    .Call('_ANTs_test_nm_conv', PACKAGE = 'ANTs', X)
+    .Call(`_ANTs_test_nm_conv`, X)
 }
 
 test_const_arma <- function(X) {
-    .Call('_ANTs_test_const_arma', PACKAGE = 'ANTs', X)
+    .Call(`_ANTs_test_const_arma`, X)
 }
 
 met_ei2 <- function(m) {
-    .Call('_ANTs_met_ei2', PACKAGE = 'ANTs', m)
+    .Call(`_ANTs_met_ei2`, m)
 }
 
 #' @title Control heterogeneity of time of observation
@@ -574,7 +582,7 @@ met_ei2 <- function(m) {
 #' @author Sebastian Sosa, Ivan Puga-Gonzalez
 #' @keywords internal
 tobs_to_mat <- function(vec) {
-    .Call('_ANTs_tobs_to_mat', PACKAGE = 'ANTs', vec)
+    .Call(`_ANTs_tobs_to_mat`, vec)
 }
 
 #' @title As factor
@@ -587,47 +595,47 @@ tobs_to_mat <- function(vec) {
 #' @references Sosa, S. (\emph{in press}). Social Network Analysis, \emph{in}: Encyclopedia of Animal Cognition and Behavior. Springer.
 #' @keywords internal
 vec_char_as_factor <- function(vec) {
-    .Call('_ANTs_vec_char_as_factor', PACKAGE = 'ANTs', vec)
+    .Call(`_ANTs_vec_char_as_factor`, vec)
 }
 
 #' @title Extract vector elements
 #' @description xtract vector elements according to indices
 #' @keywords internal
 vec_char_extract_IdValue <- function(y, x) {
-    .Call('_ANTs_vec_char_extract_IdValue', PACKAGE = 'ANTs', y, x)
+    .Call(`_ANTs_vec_char_extract_IdValue`, y, x)
 }
 
 vec_num_extract <- function(x, y) {
-    .Call('_ANTs_vec_num_extract', PACKAGE = 'ANTs', x, y)
+    .Call(`_ANTs_vec_num_extract`, x, y)
 }
 
 #' @title Merge
 #' @description Merge two vectors keeping their class
 #' @keywords internal
 vec_fill <- function(vec1, vec2, x) {
-    .Call('_ANTs_vec_fill', PACKAGE = 'ANTs', vec1, vec2, x)
+    .Call(`_ANTs_vec_fill`, vec1, vec2, x)
 }
 
 vec_id_Equal0 <- function(x) {
-    .Call('_ANTs_vec_id_Equal0', PACKAGE = 'ANTs', x)
+    .Call(`_ANTs_vec_id_Equal0`, x)
 }
 
 vec_id_sup0 <- function(x) {
-    .Call('_ANTs_vec_id_sup0', PACKAGE = 'ANTs', x)
+    .Call(`_ANTs_vec_id_sup0`, x)
 }
 
 #' @title intersect
 #' @description extract element present in none of the two vectors
 #' @keywords internal
 vec_intersect <- function(x, y) {
-    .Call('_ANTs_vec_intersect', PACKAGE = 'ANTs', x, y)
+    .Call(`_ANTs_vec_intersect`, x, y)
 }
 
 #' @title Uniques
 #' @description find uniques elements in a vector
 #' @keywords internal
 vec_levels <- function(v) {
-    .Call('_ANTs_vec_levels', PACKAGE = 'ANTs', v)
+    .Call(`_ANTs_vec_levels`, v)
 }
 
 #' @title Vector to matrix lower triangle
@@ -640,44 +648,44 @@ vec_levels <- function(v) {
 #' @author Sebastian Sosa.
 #' @keywords internal
 vec_lowertri_to_mat <- function(vec, col, diag) {
-    .Call('_ANTs_vec_lowertri_to_mat', PACKAGE = 'ANTs', vec, col, diag)
+    .Call(`_ANTs_vec_lowertri_to_mat`, vec, col, diag)
 }
 
 vec_match <- function(x, y) {
-    .Call('_ANTs_vec_match', PACKAGE = 'ANTs', x, y)
+    .Call(`_ANTs_vec_match`, x, y)
 }
 
 vec_merge <- function(vec1, vec2) {
-    .Call('_ANTs_vec_merge', PACKAGE = 'ANTs', vec1, vec2)
+    .Call(`_ANTs_vec_merge`, vec1, vec2)
 }
 
 #' @title Extract ID
 #' @description Extract ID of element selected by a numeric vector
 #' @keywords internal
 vec_num_extract_IdValue <- function(y, x) {
-    .Call('_ANTs_vec_num_extract_IdValue', PACKAGE = 'ANTs', y, x)
+    .Call(`_ANTs_vec_num_extract_IdValue`, y, x)
 }
 
 vec_resize <- function(vec, x) {
-    .Call('_ANTs_vec_resize', PACKAGE = 'ANTs', vec, x)
+    .Call(`_ANTs_vec_resize`, vec, x)
 }
 
 #' @title Vector sample
 #' @description Sample vetor keeping his class
 #' @keywords internal
 vec_sample <- function(vec1, length, replace) {
-    .Call('_ANTs_vec_sample', PACKAGE = 'ANTs', vec1, length, replace)
+    .Call(`_ANTs_vec_sample`, vec1, length, replace)
 }
 
 vec_sample_all <- function(vec) {
-    .Call('_ANTs_vec_sample_all', PACKAGE = 'ANTs', vec)
+    .Call(`_ANTs_vec_sample_all`, vec)
 }
 
 #' @title Sum
 #' @description Sum vector elements
 #' @keywords internal
 vec_sum <- function(x) {
-    .Call('_ANTs_vec_sum', PACKAGE = 'ANTs', x)
+    .Call(`_ANTs_vec_sum`, x)
 }
 
 #' @title Vector to matrix
@@ -689,7 +697,7 @@ vec_sum <- function(x) {
 #' @author Sebastian Sosa.
 #' @keywords internal
 vec_to_mat <- function(vec, ncol, diag) {
-    .Call('_ANTs_vec_to_mat', PACKAGE = 'ANTs', vec, ncol, diag)
+    .Call(`_ANTs_vec_to_mat`, vec, ncol, diag)
 }
 
 #' @title Vector to matrix and adding diag
@@ -700,46 +708,46 @@ vec_to_mat <- function(vec, ncol, diag) {
 #' @author Sebastian Sosa.
 #' @keywords internal
 vec_to_mat_add_diag <- function(vec, ncol) {
-    .Call('_ANTs_vec_to_mat_add_diag', PACKAGE = 'ANTs', vec, ncol)
+    .Call(`_ANTs_vec_to_mat_add_diag`, vec, ncol)
 }
 
 #' @title Vector uniques
 #' @description Find uniques element of one vecotr
 #' @keywords internal
 vec_unique <- function(v) {
-    .Call('_ANTs_vec_unique', PACKAGE = 'ANTs', v)
+    .Call(`_ANTs_vec_unique`, v)
 }
 
 vec_unmatch <- function(x, y) {
-    .Call('_ANTs_vec_unmatch', PACKAGE = 'ANTs', x, y)
+    .Call(`_ANTs_vec_unmatch`, x, y)
 }
 
 vec_unmatch_indexcc <- function(x, y) {
-    .Call('_ANTs_vec_unmatch_indexcc', PACKAGE = 'ANTs', x, y)
+    .Call(`_ANTs_vec_unmatch_indexcc`, x, y)
 }
 
 #' @title Vectors multiply
 #' @description Multiply two vectors
 #' @keywords internal
 vec_vec_multiply <- function(x, y) {
-    .Call('_ANTs_vec_vec_multiply', PACKAGE = 'ANTs', x, y)
+    .Call(`_ANTs_vec_vec_multiply`, x, y)
 }
 
 #' @title Vectors multiply
 #' @description Multiply two vectors
 #' @keywords internal
 vec_vec_sum <- function(x, y) {
-    .Call('_ANTs_vec_vec_sum', PACKAGE = 'ANTs', x, y)
+    .Call(`_ANTs_vec_vec_sum`, x, y)
 }
 
 vector_abs <- function(vec) {
-    .Call('_ANTs_vector_abs', PACKAGE = 'ANTs', vec)
+    .Call(`_ANTs_vector_abs`, vec)
 }
 
 #' @title Equal
 #' @description Find matrix element corresponding to an integer
 #' @keywords internal
 which_equal <- function(M, x) {
-    .Call('_ANTs_which_equal', PACKAGE = 'ANTs', M, x)
+    .Call(`_ANTs_which_equal`, M, x)
 }
 

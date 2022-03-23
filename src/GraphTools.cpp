@@ -34,13 +34,12 @@
 //
 //
 //
-// Corect GraphTool file
+
 //[Rcpp::depends(RcppArmadillo)]
 #include <iostream>
 #include <vector>
 #include <set>
 #include <queue>
-
 #include <RcppArmadillo.h>
 #include <map>
 using namespace std;
@@ -250,15 +249,16 @@ private:
     public:
         std::vector<Node*> listofNode; //the list of node in the whole network
         
-        class compareNode: binary_function<Node*, Node*, bool>{
-        private:
-            bool reverse;
-        public:
+        // auto compareNode = [](auto& x, auto& y)->bool{return a->getName() <= b->getName()};
+        
+        struct compareNode {
+            /* bool reverse;
+          
             compareNode(const bool& reverse = false){
                 this->reverse = reverse;
-            }// prepare for reverse, which means make the map rank from large to small
+            }// prepare for reverse, which means make the map rank from large to small */
             bool operator()(const Node* const &a, const Node* const &b) const{
-                if (reverse) {
+                /* if (reverse) {
                     if (a->getDistance() == b->getDistance()) {
                         return a->getName() > b->getName();
                     }
@@ -269,7 +269,11 @@ private:
                         return a->getName() < b->getName();
                     }
                     return a->getDistance() < b->getDistance();
+                }*/
+                if (a->getDistance() == b->getDistance()) {
+                  return a->getName() < b->getName();
                 }
+                return a->getDistance() < b->getDistance();
             }
         };//define a new class which compare the node and make the priority_queue works as we want
         
@@ -502,7 +506,6 @@ private:
             
             for (std::set<Node*>::reverse_iterator i = reachedNode.rbegin(); i != reachedNode.rend(); i++) {
               long int w = (*i)->getName();
-              // cout << (*i)->getDistance() << " ";
               for (long unsigned int j = 0; j < (*i)->shortestFatherList.size(); j++) {
                 long int v = (*i)->shortestFatherList[j]->getName();
                 lamda[v] += (omega[v]/omega[w]*(1 + lamda[w]));
@@ -511,8 +514,7 @@ private:
                 betweenness[w] = betweenness[w] + lamda[w];// /((size-1)*(size-2))
               }
             }
-            // cout << endl;
-            
+
             delete [] omega;
             delete [] lamda;
             //return GetPathVector(start, reachedNode);
@@ -643,7 +645,7 @@ public:
             
             arma::umat result = (comparePath % needPath);
             triangles+=(long int)arma::accu(result);
-            //cout << triangles << endl;
+
         }
         triangles/=3;//calculation triangle in matrix form.
     }
@@ -694,13 +696,13 @@ public:
                 if (isGraphSym) {
                     triangles*=2;
                 }
-                // cout << triangles << endl;
+
                 if (taskType != 1) {
                     Dijiastra(betweenness, size, distMap, shortestMap, directMap);
                 }
                 FloydBasedBetweenness(betweenness, size, distMap, shortestMap, directMap);
                 triangleArmadillo();
-                // cout << triangles << endl;
+
                 
             default:
                 break;
@@ -728,9 +730,6 @@ public:
     }
     
     double* getBetweenness(){
-        if (betweenness == NULL) {
-          //cout << "Alloc Error" << endl;
-        }
         return betweenness;
     }//return the betweenness
     

@@ -100,6 +100,12 @@ perm.net.nl.str <- function(df, labels, rf=NULL, nperm, progress = TRUE){
       }
     }
   }
-
+  if(!is.null(rf)){
+    attr(result, "ANT") <- "ANT node label permutation keeping structure with random factors"
+  }else{
+    attr(result, "ANT") <- "ANT node label permutation keeping structure"
+  }
+  attr(result, "rf") <- rf
+  attr(result, "labels") <- labels
   return(result)
 }

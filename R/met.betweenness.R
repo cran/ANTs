@@ -37,7 +37,6 @@
 #' met.betweenness(sim.m)
 #' head(sim.df)
 #' met.betweenness(sim.m,df=sim.df)
-
 met.betweenness <- function(M, binary = FALSE, shortest.weight = FALSE, normalization = TRUE, sym = FALSE, out = TRUE, df = NULL, dfid = NULL) {
   # Check if argument M is a square matrix or a list of square matrices----------------------
   test <- check.mat(M)
@@ -350,6 +349,7 @@ met.betweenness <- function(M, binary = FALSE, shortest.weight = FALSE, normaliz
           attr(result, "ctrlf") <- attributes(M)$ctrlf
           attr(result, "method") <- attributes(M)$method
           attr(result, "ANT") <- attributes(M)$ANT
+          cat("\n")
           return(result)
         }
 
@@ -362,6 +362,7 @@ met.betweenness <- function(M, binary = FALSE, shortest.weight = FALSE, normaliz
           attr(result, "alters") <- attributes(M)$alters
           attr(result, "method") <- attributes(M)$method
           attr(result, "ANT") <- attributes(M)$ANT
+          cat("\n")
           return(result)
         }
 
@@ -370,6 +371,7 @@ met.betweenness <- function(M, binary = FALSE, shortest.weight = FALSE, normaliz
         # In case of future repermutations
         if (test3) {
           attr(result, "ANT") <- attributes(M)$ANT
+          cat("\n")
           return(result)
         }
       }
@@ -471,6 +473,7 @@ met.betweenness <- function(M, binary = FALSE, shortest.weight = FALSE, normaliz
           attr(result, "ctrlf") <- attributes(M)$ctrlf
           attr(result, "method") <- attributes(M)$method
           attr(result, "ANT") <- attributes(M)$ANT
+          cat("\n")
           return(result)
         }
 
@@ -483,6 +486,7 @@ met.betweenness <- function(M, binary = FALSE, shortest.weight = FALSE, normaliz
           attr(result, "alters") <- attributes(M)$alters
           attr(result, "method") <- attributes(M)$method
           attr(result, "ANT") <- attributes(M)$ANT
+          cat("\n")
           return(result)
         }
 

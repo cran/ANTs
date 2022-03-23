@@ -11,7 +11,7 @@ perm.ds.focal(
   alters,
   nperm,
   progress = T,
-  method = "sri"
+  index = "sri"
 )
 }
 \arguments{
@@ -27,15 +27,12 @@ perm.ds.focal(
 
 \item{progress}{a boolean indicating if the permutation process must be visible.}
 
-\item{method}{a string indicating the association index to compute:
+\item{index}{a string indicating the association index to compute:
 \itemize{
 \item 'sri' for Simple ratio index: \eqn{x/x+yAB+yA+yB}
 \item 'hw' for Half-weight index: \eqn{x/x+yAB+1/2(yA+yB)}
 \item 'sr' for Square root index:\eqn{x/sqr((x+yAB+yA)(x+yAB+yB))}
 }}
-}
-\value{
-list of square association index matrices.
 }
 \description{
 Warning, the original function (Farine 2017) uses a control factor, the number of focals and the ids of the focals.
@@ -45,7 +42,7 @@ Pre-network permutation for focal sampling data, and for symmetric behaviour onl
 }
 \examples{
 head(sim.focal.undirected)
-t=perm.ds.focal(sim.focal.undirected,focal=3,ctrl=1,alters=4,nperm=10,progress=TRUE,method='sri')
+t=perm.ds.focal(sim.focal.undirected,focal=3,ctrl=1,alters=4,nperm=10,progress=TRUE,index='sri')
 }
 \references{
 Farine, D. R. (2017). A guide to null models for animal social network analysis. Methods in ecology and evolution, 8(10), 1309-1320.

@@ -11,7 +11,7 @@ perm.dataStream.focal(
   alters,
   nperm,
   progress = TRUE,
-  method = "sri"
+  index = "sri"
 )
 }
 \arguments{

@@ -49,9 +49,6 @@
 #' sampling.uncertainty(df = sim.grp, nboot = 100, assoc.indices = TRUE, 
 #'                      scan = c("day", "location", "time"), id = "ID")
 sampling.uncertainty <- function(df, nboot, metric = "met.strength", assoc.indices = FALSE, actor = NULL, receiver = NULL, scan = NULL, id = NULL, index = "sri", progress = TRUE, ...) {
-  op <- par(no.readonly = TRUE)
-  on.exit(par(op))
-  par(bg = "gray63")
   if (assoc.indices) {
     if (is.null(scan) | is.null(id)) {
       stop("Arguments 'scan' and 'id' cannot be NULL.")
@@ -112,38 +109,42 @@ sampling.uncertainty <- function(df, nboot, metric = "met.strength", assoc.indic
       M <- df.to.mat(tmp, actor = actor, receiver = receiver)
       result[[a + 1]] <- do.call(metric, list(M = M, ...))
     }
-  }
+  
 
   # Merging and returning result
   # Node network measures
   if (length(met) > 1) {
     result <- do.call(rbind, lapply(result, "[", names))
     # Plot results
+    par(bg = "gray63")
     boxplot(result[-1, ], ylim = c(min(result, na.rm = TRUE), max(result, na.rm = TRUE)))
     stripchart(result[1, ] ~ c(1:ncol(result)),
       vertical = T,
       method = "jitter", pch = 21,
       col = "white", bg = "white", add = TRUE
     )
+    p <- recordPlot()
     # Give ANTs attribute for future development of analytical protocol
     attr(result, "ANT") <- "Bootsraping deletions"
     # Return a list with 1) the different values of node metrics, 2) the summary of posterior distribution for each individual node metric, 3) a boxplot with posterior distribution for each individual node metric
-    return <- list("metrics" = result, "summary" = summary(result[-1, ]))
+    return <- list("metrics" = result, "summary" = summary(result[-1, ]), "plot" = p)
   }
   # Network global measures
   else {
     result <- unlist(result)
     # Plot results
+    par(bg = "gray63")
     boxplot(result[-1], ylim = c(min(result, na.rm = TRUE), max(result, na.rm = TRUE)))
     stripchart(result[1],
       vertical = T,
       method = "jitter", pch = 21,
       col = "white", bg = "white", add = TRUE
     )
+    p <- recordPlot()
     # Give ANTs attribute for future development of analytical protocol
     attr(result, "ANT") <- "Bootsraping deletions"
     # Return a list with 1) the different values of node metrics, 2) the summary of posterior distribution for each individual node metric, 3) a boxplot with posterior distribution for each individual node metric
-
-    return <- list("metrics" = result, "summary" = summary(result[-1]))
+    return <- list("metrics" = result, "summary" = summary(result[-1]), "plot" = p)
+  }
   }
 }

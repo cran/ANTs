@@ -124,13 +124,13 @@ stat.glmm <- function(ant, formula, family, oda = NULL, progress = TRUE, ...) {
         else {
           obs <- summary(tmp)
           obs$fit <- fitted(tmp)
-          obs$family <- paste(family)
+          obs$family <- paste(fam)
         }
       }
       else {
         obs <- summary(tmp)
         obs$fit <- fitted(tmp)
-        obs$family <- paste(family)
+        obs$family <- paste(fam)
         obs$coefficients <- obs$coefficients[, -4]
       }
 
@@ -289,7 +289,7 @@ stat.glmm <- function(ant, formula, family, oda = NULL, progress = TRUE, ...) {
         else {
           obs <- summary(tmp)
           obs$fit <- fitted(tmp)
-          obs$family <- paste(family)
+          obs$family <- paste(fam)
         }
       }
       else {
@@ -405,9 +405,9 @@ stat.glmm <- function(ant, formula, family, oda = NULL, progress = TRUE, ...) {
       }
     }
     permuted <- do.call("rbind", permuted)
-    result <- list("Original.model" = obs, "permutations" = permuted, "errors" = tmp.env$error)
+    result <- list("Original.model" = obs, "permutations" = as.data.frame(permuted), "errors" = tmp.env$error)
     attr(result, "class") <- "ant glmm"
-    attr(result, "family") <- paste(family)
+    attr(result, "family") <- paste(fam)
     attr(result, "formula") <- format(formula)
     cat("\n")
     return(result)
@@ -469,13 +469,13 @@ stat.glmm <- function(ant, formula, family, oda = NULL, progress = TRUE, ...) {
         else {
           obs <- summary(tmp)
           obs$fit <- fitted(tmp)
-          obs$family <- paste(family)
+          obs$family <- paste(fam)
         }
       }
       else {
         obs <- summary(tmp)
         obs$fit <- fitted(tmp)
-        obs$family <- paste(family)
+        obs$family <- paste(fam)
         obs$coefficients <- obs$coefficients[, -4]
       }
 
@@ -642,13 +642,13 @@ stat.glmm <- function(ant, formula, family, oda = NULL, progress = TRUE, ...) {
         else {
           obs <- summary(tmp)
           obs$fit <- fitted(tmp)
-          obs$family <- paste(family)
+          obs$family <- paste(fam)
         }
       }
       else {
         obs <- summary(tmp)
         obs$fit <- fitted(tmp)
-        obs$family <- paste(family)
+        obs$fam <- paste(fam)
       }
 
       cat("Original model : ", "\n", "\n")
@@ -763,9 +763,9 @@ stat.glmm <- function(ant, formula, family, oda = NULL, progress = TRUE, ...) {
     }
 
     permuted <- do.call("rbind", permuted)
-    result <- list("Original.model" = obs, "permutations" = permuted, "errors" = tmp.env$error)
+    result <- list("Original.model" = obs, "permutations" = as.data.frame(permuted), "errors" = tmp.env$error)
     attr(result, "class") <- "ant glmm"
-    attr(result, "family") <- paste(family)
+    attr(result, "family") <- paste(fam)
     attr(result, "formula") <- format(formula)
     cat("\n")
     return(result)
@@ -823,13 +823,13 @@ stat.glmm <- function(ant, formula, family, oda = NULL, progress = TRUE, ...) {
         else {
           obs <- summary(tmp)
           obs$fit <- fitted(tmp)
-          obs$family <- paste(family)
+          obs$family <- paste(fam)
         }
       }
       else {
         obs <- summary(tmp)
         obs$fit <- fitted(tmp)
-        obs$family <- paste(family)
+        obs$family <- paste(fam)
         obs$coefficients <- obs$coefficients[, -4]
       }
 
@@ -996,13 +996,13 @@ stat.glmm <- function(ant, formula, family, oda = NULL, progress = TRUE, ...) {
         else {
           obs <- summary(tmp)
           obs$fit <- fitted(tmp)
-          obs$family <- paste(family)
+          obs$family <- paste(fam)
         }
       }
       else {
         obs <- summary(tmp)
         obs$fit <- fitted(tmp)
-        obs$family <- paste(family)
+        obs$family <- paste(fam)
       }
 
       cat("Original model : ", "\n", "\n")
@@ -1115,9 +1115,361 @@ stat.glmm <- function(ant, formula, family, oda = NULL, progress = TRUE, ...) {
     }
 
     permuted <- do.call("rbind", permuted)
-    result <- list("Original.model" = obs, "permutations" = permuted, "errors" = tmp.env$error)
+    result <- list("Original.model" = obs, "permutations" = as.data.frame(permuted), "errors" = tmp.env$error)
     attr(result, "class") <- "ant glmm"
-    attr(result, "family") <- paste(family)
+    attr(result, "family") <- paste(fam)
+    attr(result, "formula") <- format(formula)
+    cat("\n")
+    return(result)
+  }
+  
+  if (attributes(ant)$ANT == "ANT node label permutation keeping structure with random factors") {
+    if (fam == "gaussian") {
+      # Test on observed data ------------------------------------------------------------------------
+      odf <- ant[[1]]
+      
+      tmp <- tryCatch(suppressWarnings(suppressMessages(lmer(formula = formula, data = odf, ...))), error = identity)
+      
+      if (isS4(tmp)) {
+        if (is(tmp, "error")) {
+          print("The model on your original data contains the following errors.")
+          print(tmp)
+          stop()
+        }
+        else {
+          r2=with(tmp@optinfo$derivs,solve(Hessian,gradient))
+          if(max(abs(r2))<0.001){test=TRUE}
+          else{
+            test <- c(!is(tmp, "error"), !is(tmp, "warning"),tmp@optinfo$conv$opt == 0, length(tmp@optinfo$conv$lme4$messages) == 0, length(tmp@optinfo$warnings) == 0)
+          }
+        }
+      }
+      if (is(tmp, "error")) {
+        print("The model on your original data contains the following errors.")
+        print(tmp)
+        stop()
+      }
+      if (is(tmp, "warning")) {
+        test <- FALSE
+      }
+      
+      if (all(test) != TRUE) {
+        # play.sound(FALSE)
+        warning("The model on your original data contains the following warnings.")
+        if (isS4(tmp)) {
+          print(tmp@optinfo$conv$lme4$messages)
+        }
+        else {
+          cat(tmp$message)
+        }
+        answer <- readline(prompt = "Do you want to continue (y/n)? ")
+        
+        while (answer != "y" & answer != "n") {
+          # play.sound(FALSE)
+          readline("Model on your orignal data contain warnings.")
+          answer <- readline(prompt = "Do you want to continue (y/n)? ")
+        }
+        if (answer == "n") {
+          suppressMessages(stop(print(tmp)))
+        }
+        else {
+          obs <- summary(tmp)
+          obs$fit <- fitted(tmp)
+          obs$family <- paste(fam)
+        }
+      }
+      else {
+        obs <- summary(tmp)
+        obs$fit <- fitted(tmp)
+        obs$family <- paste(fam)
+        obs$coefficients <- obs$coefficients[, -4]
+      }
+      
+      cat("Original model : ", "\n", "\n")
+      print(obs)
+      
+      at <- attributes(ant)
+      ant <- ant[-1]
+      attributes(ant) <- at
+      
+      # Test along the list of permutation data ------------------------------------------------------------------------
+      if (progress) {
+        tmp.env <- new.env()
+        tmp.env$error <- NULL
+        ctrl <- attributes(ant)$rf
+        labels <- attributes(ant)$labels
+        
+        permuted <- lapply(seq_along(ant), function(i, ant, formula, progress, ctrl, odf, labels, ...) {
+          cat("  Processing permutation : ", attributes(ant[[i]])$permutation, "\r")
+          
+          r <- tryCatch(suppressWarnings(suppressMessages(lmer(formula = formula, data = ant[[i]], ...))), error = identity)
+          
+          if (isS4(r)) {
+            r2=with(r@optinfo$derivs,solve(Hessian,gradient))
+            if(max(abs(r2))<0.001){test=TRUE}
+            else{
+              test <- c(!is(r, "error"), !is(r, "warning"),r@optinfo$conv$opt == 0, length(tmp@optinfo$conv$lme4$messages) == 0, length(r@optinfo$warnings) == 0)
+            }
+          }
+          if (is(r, "error")) {
+            test <- FALSE
+          }
+          if (is(r, "warning")) {
+            test <- FALSE
+          }
+          
+          if (all(test) != TRUE) {
+            tmp.env$error <- c(tmp.env$error, attributes(ant[[i]])$permutation)
+            while (all(test) != TRUE) {
+              newdf <- perm.net.nl.str(df = odf, labels = labels, rf = ctrl, nperm = 1,  progress = FALSE)[[2]]
+              r <- tryCatch(suppressWarnings(suppressMessages(lmer(formula = formula, data = newdf, ...))), error = identity)
+              
+              if (isS4(r)) {
+                r2=with(r@optinfo$derivs,solve(Hessian,gradient))
+                if(max(abs(r2))<0.001){test=TRUE}
+                else{
+                  test <- c(!is(r, "error"), !is(r, "warning"),r@optinfo$conv$opt == 0, length(r@optinfo$conv$lme4$messages) == 0, length(r@optinfo$warnings) == 0)
+                }
+              }
+              if (is(r, "error")) {
+                test <- FALSE
+              }
+              if (is(r, "warning")) {
+                test <- FALSE
+              }
+            }
+          }
+          
+          r <- summary(r)$coefficients[, 1]
+          
+          return(r)
+        }, ant = ant, formula, progress = TRUE, ctrl = ctrl, odf = odf, labels = labels, ...)
+        cat("\n")
+      }
+      else {
+        tmp.env <- new.env()
+        tmp.env$error <- NULL
+        ctrl <- attributes(ant)$rf
+        labels <- attributes(ant)$labels
+        
+        permuted <- lapply(seq_along(ant), function(i, ant, formula, progress, ctrl, odf, labels, ...) {
+          r <- tryCatch(suppressWarnings(suppressMessages(lme4::lmer(formula = formula, data = ant[[i]], ...))), error = identity)
+          
+          if (isS4(r)) {
+            r2=with(r@optinfo$derivs,solve(Hessian,gradient))
+            if(max(abs(r2))<0.001){test=TRUE}
+            else{
+              test <- c(!is(r, "error"), !is(r, "warning"),r@optinfo$conv$opt == 0, length(r@optinfo$conv$lme4$messages) == 0, length(r@optinfo$warnings) == 0)
+            }
+          }
+          if (is(r, "error")) {
+            test <- FALSE
+          }
+          if (is(r, "warning")) {
+            test <- FALSE
+          }
+          
+          if (all(test) != TRUE) {
+            tmp.env$error <- c(tmp.env$error, attributes(ant[[i]])$permutation)
+            while (all(test) != TRUE) {
+              newdf <- perm.net.nl.str(df = odf, labels = labels, rf = ctrl, nperm = 1,  progress = FALSE)[[2]]
+              r <- tryCatch(suppressWarnings(suppressMessages(lme4::lmer(formula = formula, data = newdf, ...))), error = identity)
+              
+              if (isS4(r)) {
+                r2=with(r@optinfo$derivs,solve(Hessian,gradient))
+                if(max(abs(r2))<0.001){test=TRUE}
+                else{
+                  test <- c(!is(r, "error"), !is(r, "warning"),r@optinfo$conv$opt == 0, length(r@optinfo$conv$lme4$messages) == 0, length(r@optinfo$warnings) == 0)
+                }
+              }
+              if (is(r, "error")) {
+                test <- FALSE
+              }
+              if (is(r, "warning")) {
+                test <- FALSE
+              }
+            }
+          }
+          
+          r <- summary(r)$coefficients[, 1]
+          
+          return(r)
+        }, ant = ant, formula, progress = TRUE, ctrl = ctrl, odf = odf, labels = labels, ...)
+      }
+    }
+    
+    if (fam != "gaussian") {
+      # Test on observed data ------------------------------------------------------------------------
+      odf <- ant[[1]]
+      
+      tmp <- suppressWarnings(tryCatch(suppressMessages(lme4::glmer(formula = formula, data = odf, family = family, ...)), error = identity))
+      if (isS4(tmp)) {
+        if (is(tmp, "error")) {
+          print("The model on your original data contains the following errors.")
+          print(tmp)
+          stop()
+        }
+        else {
+          r2=with(tmp@optinfo$derivs,solve(Hessian,gradient))
+          if(max(abs(r2))<0.001){test=TRUE}
+          else{
+            test <- c(!is(tmp, "error"), !is(tmp, "warning"),tmp@optinfo$conv$opt == 0, length(tmp@optinfo$conv$lme4$messages) == 0, length(tmp@optinfo$warnings) == 0)
+          }
+        }
+      }
+      if (is(tmp, "error")) {
+        print("The model on your original data contains the following errors.")
+        print(tmp)
+        stop()
+      }
+      if (is(tmp, "warning")) {
+        test <- FALSE
+      }
+      
+      if (all(test) != TRUE) {
+        # play.sound(FALSE)
+        warning("The model on your original data contains the following warnings.")
+        if (isS4(tmp)) {
+          print(tmp@optinfo$conv$lme4$messages)
+        }
+        else {
+          cat(tmp$message)
+        }
+        answer <- readline(prompt = "Do you want to continue (y/n)? ")
+        
+        while (answer != "y" & answer != "n") {
+          # play.sound(FALSE)
+          readline("Model on your orignal data contain warnings.")
+          answer <- readline(prompt = "Do you want to continue (y/n)? ")
+        }
+        if (answer == "n") {
+          suppressMessages(stop(print(tmp)))
+        }
+        else {
+          obs <- summary(tmp)
+          obs$fit <- fitted(tmp)
+          obs$family <- paste(fam)
+        }
+      }
+      else {
+        obs <- summary(tmp)
+        obs$fit <- fitted(tmp)
+        obs$family <- paste(fam)
+      }
+      
+      cat("Original model : ", "\n", "\n")
+      print(summary(obs))
+      
+      at <- attributes(ant)
+      ant <- ant[-1]
+      attributes(ant) <- at
+      
+      ctrl <- attributes(ant)$rf
+      labels <- attributes(ant)$labels
+      # Test along the list of permutation data ------------------------------------------------------------------------
+      if (progress == TRUE) {
+        tmp.env <- new.env()
+        tmp.env$error <- NULL
+        
+        permuted <- lapply(ant, function(d, formula, family, ctrl, labels, odf, ...) {
+          cat("  Processing permutation : ", attributes(d)$permutation, "\r")
+          r <- tryCatch(suppressWarnings(suppressMessages(lme4::glmer(formula = formula, data = d, family = family, ...))), error = identity)
+          
+          if (isS4(r)) {
+            r2=with(r@optinfo$derivs,solve(Hessian,gradient))
+            if(max(abs(r2))<0.001){test=TRUE}
+            else{
+              test <- c(!is(r, "error"), !is(r, "warning"),r@optinfo$conv$opt == 0, length(r@optinfo$conv$lme4$messages) == 0, length(r@optinfo$warnings) == 0)
+            }
+          }
+          if (is(r, "error")) {
+            test <- FALSE
+          }
+          if (is(r, "warning")) {
+            test <- FALSE
+          }
+          
+          if (all(test) != TRUE) {
+            tmp.env$error <- c(tmp.env$error, attributes(d)$permutation)
+          }
+          
+          while (all(test) != TRUE) {
+            newdf <- perm.net.nl.str(df = odf, labels = labels, rf = ctrl, nperm = 1,  progress = FALSE)[[2]]
+            r <- tryCatch(suppressWarnings(suppressMessages(lme4::glmer(formula = formula, data = newdf, family = family, ...))), error = identity)
+            
+            if (isS4(r)) {
+              r2=with(r@optinfo$derivs,solve(Hessian,gradient))
+              if(max(abs(r2))<0.001){test=TRUE}
+              else{
+                test <- c(!is(r, "error"), !is(r, "warning"),r@optinfo$conv$opt == 0, length(r@optinfo$conv$lme4$messages) == 0, length(r@optinfo$warnings) == 0)
+              }
+            }
+            if (is(r, "error")) {
+              test <- FALSE
+            }
+            if (is(r, "warning")) {
+              test <- FALSE
+            }
+          }
+          
+          r <- summary(r)$coefficients[, 1]
+          return(r)
+        }, formula = formula, family = family, ctrl = ctrl, labels, odf, ...)
+        cat("\n")
+      }
+      else {
+        tmp.env <- new.env()
+        tmp.env$error <- NULL
+        
+        permuted <- lapply(ant, function(d, formula, family, ctrl, labels, odf, w, ...) {
+          r <- tryCatch(suppressWarnings(suppressMessages(lme4::glmer(formula = formula, data = d, family = family, ...))), error = identity)
+          
+          if (isS4(r)) {
+            r2=with(r@optinfo$derivs,solve(Hessian,gradient))
+            if(max(abs(r2))<0.001){test=TRUE}
+            else{
+              test <- c(!is(r, "error"), !is(r, "warning"),r@optinfo$conv$opt == 0, length(r@optinfo$conv$lme4$messages) == 0, length(r@optinfo$warnings) == 0)
+            }
+          }
+          if (is(r, "error")) {
+            test <- FALSE
+          }
+          if (is(r, "warning")) {
+            test <- FALSE
+          }
+          
+          if (all(test) != TRUE) {
+            tmp.env$error <- c(tmp.env$error, attributes(d)$permutation)
+          }
+          
+          while (all(test) != TRUE) {
+            newdf <- perm.net.nl.str(df = odf, labels = labels, rf = ctrl, nperm = 1,  progress = FALSE)[[2]]
+            r <- tryCatch(suppressWarnings(suppressMessages(lme4::glmer(formula = formula, data = newdf, family = family, ...))), error = identity)
+            if (isS4(r)) {
+              r2=with(r@optinfo$derivs,solve(Hessian,gradient))
+              if(max(abs(r2))<0.001){test=TRUE}
+              else{
+                test <- c(!is(r, "error"), !is(r, "warning"),r@optinfo$conv$opt == 0, length(r@optinfo$conv$lme4$messages) == 0, length(r@optinfo$warnings) == 0)
+              }
+            }
+            if (is(r, "error")) {
+              test <- FALSE
+            }
+            if (is(r, "warning")) {
+              test <- FALSE
+            }
+          }
+          
+          r <- summary(r)$coefficients[, 1]
+          return(r)
+        }, formula = formula, family = family, ctrl = ctrl, labels, odf, ...)
+      }
+    }
+    
+    permuted <- do.call("rbind", permuted)
+    result <- list("Original.model" = obs, "permutations" = as.data.frame(permuted), "errors" = tmp.env$error)
+    attr(result, "class") <- "ant glmm"
+    attr(result, "family") <- paste(fam)
     attr(result, "formula") <- format(formula)
     cat("\n")
     return(result)

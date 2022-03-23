@@ -51,9 +51,6 @@
 #'                             actor = "actor", receiver = "receiver", metric = "met.diameter")
 sampling.robustness <- function(df, subsampling = c(5, 10, 20, 30, 40, 50), metric = "met.strength",
                                 assoc.indices = FALSE, actor, receiver, scan, id, index = "sri",progress = TRUE, ...) {
-  op <- par(no.readonly = TRUE)
-  on.exit(par(op))
-  par(bg = "gray63")
   # Compute percentages
   percent <- (subsampling * nrow(df)) / 100
 
@@ -88,47 +85,47 @@ sampling.robustness <- function(df, subsampling = c(5, 10, 20, 30, 40, 50), metr
 
     # Bootstrapping for each value declared by the user
     for (a in 1:length(subsampling)) {
-      if(progress){cat("  Processing bootstrap : ", a, "\r")}
+      if(progress)cat("  Processing bootstrap : ", a, "\r")}
       tmp <- df[-sample(1:nrow(df), percent[a], replace = FALSE), ]
       gbi <- df.to.gbi(tmp, scan = col.scan, id = col.id)
       M <- assoc.indices(gbi, index)
       result[[a + 1]] <- do.call(metric, list(M = M, ...))
     }
-  }
+
   
   # Merging and returning result
   # Node network measures
   if (length(met) > 1){
     result <- do.call(rbind, lapply(result, "[", names))
     # Plot results
-    
+    par(bg = "gray63")
     boxplot(result[-1, ], ylim=c(min(result, na.rm = TRUE), max(result, na.rm = TRUE)))
     stripchart(result[1, ]~c(1:ncol(result)),
                vertical = T,
                method = "jitter", pch = 21,
                col = "white", bg = "white", add = TRUE
     )
-
+    p <- recordPlot()
     # Give ANTs attribute for future developement of analytical protocol
     attr(result, "ANT") <- "Bootsraping deletions"
     # Return a list with 1) the different values of node metrics, 2) the summary of posterior distribution for each individual node metric, 3) a boxplot with posterior distribution for each individual node metric
-    
-    return <- list("metrics" = result, "summary" = summary(result[-1, ]))
-  }
-  # Network global measures
-  else{
+    return <- list("metrics" = result, "summary" = summary(result[-1, ]), "plot" = p)
+  }else{
     result <- unlist(result)
     # Plot results
+    par(bg = "gray63")
     boxplot(result[-1], ylim=c(min(result, na.rm = TRUE), max(result, na.rm = TRUE)))
     stripchart(result[1],
                vertical = T,
                method = "jitter", pch = 21,
                col = "white", bg = "white", add = TRUE
     )
+    p <- recordPlot()
     # Give ANTs attribute for future developement of analytical protocol
     attr(result, "ANT") <- "Bootsrapping deletions"
     # Return a list with 1) the different values of node metrics, 2) the summary of posterior distribution for each individual node metric, 3) a boxplot with posterior distribution for each individual node metric
-    
-    return <- list("metrics" = result, "summary" = summary(result[-1]))
+    return <- list("metrics" = result, "summary" = summary(result[-1]), "plot" = p)
   }
+  # Network global measures
+  
 }

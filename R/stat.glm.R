@@ -42,7 +42,7 @@
 #' @examples
 #' t=met.degree(sim.m, sym = TRUE,sim.df,1) # Computing network metric
 #' t=perm.net.nl(t,labels='age',rf=NULL,nperm=10,progress=FALSE) # Node label permutations
-#' r.glm=stat.glm(ant = t,formula = degree ~ sex,progress=FALSE) # Permuted GLM
+#' r.glm=stat.glm(ant = t,formula = degree ~ age,progress=FALSE) # Permuted GLM
 #' @seealso \code{\link[stats]{glm}}
 
 
@@ -105,10 +105,12 @@ stat.glm <- function(ant, oda, formula, family = "gaussian", progress = TRUE, st
   # 3. If error, redo permutation
   # 4. Perform steps 1, 2, 3 until there is no more error
   test1 <- attributes(ant)$ANT == "ANT node label permutation"
-  test2 <- attributes(ant)$ANT == "ANT data stream group sampling single matrix"
-  test3 <- attributes(ant)$ANT == "ANT data stream focal sampling single matrix"
+  test2 <- attributes(ant)$ANT == "ANT node label permutation keeping structure"
+  test3 <- attributes(ant)$ANT == "ANT data stream group sampling single matrix"
+  test4 <- attributes(ant)$ANT == "ANT data stream focal sampling single matrix"
 
-  if (any(test1, test2, test3)) {
+
+  if (any(test1, test2, test3, test4)) {
     # If node label permutations
     if (test1) {
       # Create en environment to store the permutations that return model errors
@@ -184,6 +186,81 @@ stat.glm <- function(ant, oda, formula, family = "gaussian", progress = TRUE, st
         cat("\n")
       }
     }
+    
+    if (test2) {
+      # Create en environment to store the permutations that return model errors
+      tmp.env <- new.env()
+      tmp.env$error <- NULL
+      # Store label permutation information (random factors and permuted labels)
+      ctrl <- attributes(ant)$rf
+      labels <- attributes(ant)$labels
+      
+      if (progress) {
+        # GLM on permuted data
+        results <- lapply(seq_along(ant), function(i, ant, formula, progress = TRUE, ctrl = ctrl, odf, labels, family, start, control, model, method, x, y, contrasts, ...) {
+          cat("  Processing permutation : ", attributes(ant[[i]])$permutation, "\r")
+          
+          #GLM
+          r <- tryCatch(glm(
+            formula = formula, data = ant[[i]], family = family, start = start, control = control,
+            model = model, method = method, x = x, y = y, contrasts = contrasts, ...
+          ), error = identity)
+          
+          # If error
+          if (is(r, "error") | is(r, "warning")) {
+            # Extract permutation number
+            tmp.env$error <- c(tmp.env$error, attributes(ant[[i]])$permutation)
+            # While error or warning
+            while (is(r, "error") | is(r, "warning")) {
+              # Permuted labels 
+              newdf <- perm.net.nl(odf, labels, rf = NULL, nperm = 1, progress = FALSE)[[2]]
+              # Redo GLM
+              r <- tryCatch(glm(
+                formula = formula, data = newdf, family = family, start = start, control = control,
+                model = model, method = method, x = x, y = y, contrasts = contrasts, ...
+              ), error = identity)
+            }
+          }
+          # Extract coefficients
+          r <- summary(r)$coefficients[, 1]
+          return(r)
+        }, ant = ant, formula = formula, progress = TRUE, odf = odf, labels = labels, family = family, start = start, control = control, model = model, method = method, x = x, y = y, contrasts = contrasts, ...)
+        cat("\n")
+      }
+      
+      # If argument progress is FALSE, same as previoulsy but without printing statisitical test progress
+      else {
+        # GLM on permuted data
+        results <- lapply(seq_along(ant), function(i, ant, formula, progress = TRUE, ctrl = ctrl, odf, labels, family, start, control, model, method, x, y, contrasts, ...) {
+          
+          #GLM
+          r <- tryCatch(glm(
+            formula = formula, data = ant[[i]], family = family, start = start, control = control,
+            model = model, method = method, x = x, y = y, contrasts = contrasts, ...
+          ), error = identity)
+          
+          # If error
+          if (is(r, "error") | is(r, "warning")) {
+            # Extract permutation number
+            tmp.env$error <- c(tmp.env$error, attributes(ant[[i]])$permutation)
+            # While error or warning
+            while (is(r, "error") | is(r, "warning")) {
+              # Permuted labels 
+              newdf <- perm.net.nl(odf, labels, rf = NULL, nperm = 1, progress = FALSE)[[2]]
+              # Redo GLM
+              r <- tryCatch(glm(
+                formula = formula, data = newdf, family = family, start = start, control = control,
+                model = model, method = method, x = x, y = y, contrasts = contrasts, ...
+              ), error = identity)
+            }
+          }
+          # Extract coefficients
+          r <- summary(r)$coefficients[, 1]
+          return(r)
+        }, ant = ant, formula = formula, progress = TRUE, odf = odf, labels = labels, family = family, start = start, control = control, model = model, method = method, x = x, y = y, contrasts = contrasts, ...)
+        cat("\n")
+      }
+    }
 
     # Finding node metrics to recompute in case of warning or error along permuted data if agument ant is of type "ANT data stream group sampling single matrix" or "ANT data stream focal sampling single matrix"------------------------------------------
     # Extract metrics inside the formula
@@ -201,7 +278,7 @@ stat.glm <- function(ant, oda, formula, family = "gaussian", progress = TRUE, st
     odf <- odf[, -c(df.col.findId(odf, target.metrics))]
 
     # ANT data stream group and focal sampling  ------------------------------------------
-    if (test2) {
+    if (test3) {
       cat("in", "\n")
       # Finding scan, control factor and method to redo data stream permutation
       Scan <- attributes(ant)$scan
@@ -282,7 +359,7 @@ stat.glm <- function(ant, oda, formula, family = "gaussian", progress = TRUE, st
       }
     }
 
-    if (test3) {
+    if (test4) {
       # Finding focals, control factors, alters and method to redo data stream permutation
       focal <- attributes(ant)$focal
       ctrl <- attributes(ant)$ctrl
@@ -365,7 +442,7 @@ stat.glm <- function(ant, oda, formula, family = "gaussian", progress = TRUE, st
   # Merge list of coefficients
   results <- do.call("rbind", results)
   # Create an object with the original model, the permuted coefficients, the permutation numbers that require repermutations
-  result <- list("Original.model" = obs, "permutations" = results, "errors" = tmp.env$error)
+  result <- list("Original.model" = obs, "permutations" = as.data.frame(results), "errors" = tmp.env$error)
   attr(result, "class") <- "ant glm"
   attr(result, "formula") <- paste(format(formula))
   return(result)

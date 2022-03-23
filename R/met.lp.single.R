@@ -19,7 +19,7 @@
 #' @param df a data frame of same length of the input matrix.
 #' @param dfid an integer indicating the column of individual ids in argument \emph{df}
 #' @param binary a boolean indicating if the binary version of the laplacian centrality has to be computed.
-#' @return a numeric vector.
+
 #' @details Laplacian centrality is the drop in the Laplacian energy of the graph when the vertex is removed.
 #' This version uses the degrees (for the binary version ) or the strength (for the weigthed version) to calculate laplacian centrality.
 #' @author Sebastian Sosa, Ivan Puga-Gonzalez.
@@ -44,6 +44,10 @@ met.lp.single <- function(M, df = NULL, dfid = NULL, binary = FALSE) {
     return(result)
   }
   else {
+    if (is.data.frame(df) == FALSE) {
+      stop("Argument df must be a data frame")
+    }
+    
     # If argument dfid is not null
     if (!is.null(dfid)) {
       if (is.null(colnames(M))) {
@@ -51,18 +55,22 @@ met.lp.single <- function(M, df = NULL, dfid = NULL, binary = FALSE) {
       }
       # Order data frame according to argument dfid
       col.id <- df.col.findId(df, dfid)
-      df <- df[match(colnames(M), df[, col.id]), ]
-    }
-    if (is.data.frame(df) == FALSE) {
-      stop("Argument df must be a data frame")
-    }
-    # Add vector of network metrics in a new colum
-    if(binary){
-      df$lpB <- result
-    }
-    else{
-      df$lp <- met.lpcW(M)
-    }      
-    return(df)
+      if(binary){
+        df <- merge.met(vec = result, names = colnames(M), df = df, dfid = col.id, met = "lpB")
+      }
+      else{
+        df <- merge.met(vec = result, names = colnames(M), df = df, dfid = col.id, met = "lp")
+      }      
+      return(df)
+    }else{
+      # Add vector of network metrics in a new colum
+      if(binary){
+        df$lpB <- result
+      }
+      else{
+        df$lp <- met.lpcW(M)
+      }      
+      return(df)
     }
   }
+}

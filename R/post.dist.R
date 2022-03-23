@@ -28,31 +28,36 @@ post.dist <- function(v_perm, Obs = NULL, ncols = NULL, nrows = NULL) {
       Obs <- v_perm[1, 1]
       # Extract permuted values
       v_perm <- v_perm[-1, 2]
-    }
-    if (Obs > m) {
-      # Plot histogram of permuted values
-      h <- hist(v_perm, breaks = length(v_perm), xaxt = "n")
-      cuts <- cut(h$breaks, c(Obs, Inf))
-      cuts <- ifelse(is.na(cuts), "gray10", "gray25")
-      plot(h, col = cuts, border = cuts, main = paste(attributes(v_perm)$comment), xaxt = "n")
-      axis(1)
-      mtext(1, text = round(Obs, digits = 2), at = Obs, col = "white")
-      # Plot observed value
-      abline(v = Obs, col = "white")
-      legend("topright", legend = "observed value", text.col = "white", box.lty = 0)
-    }
-    else {
-      # Plot histogram of permuted values
-      h <- hist(v_perm, breaks = length(v_perm), xaxt = "n")
-      cuts <- cut(h$breaks, c(Obs, Inf))
-      cuts <- ifelse(is.na(cuts), "gray25", "gray10")
-      plot(h, col = cuts, border = cuts, xlab = paste(attributes(v_perm)$comment), xaxt = "n")
-      axis(1)
-      mtext(1, text = round(Obs, digits = 2), at = Obs, col = "white")
-      # Plot observed value
-      abline(v = Obs, col = "white")
-      legend("topright", legend = "observed value", text.col = "white", box.lty = 0)
-    }
+
+    }      
+    m <- mean(v_perm)
+    
+    #if (Obs > m) {
+    #  # Plot histogram of permuted values
+    #  h <- hist(v_perm, breaks = length(v_perm), xaxt = "n")
+    #  cuts <- cut(h$breaks, c(Obs, Inf))
+    #  cuts <- ifelse(is.na(cuts), "gray10", "gray25")
+    #  plot(h, col = cuts, border = cuts, main = paste(attributes(v_perm)$comment), xaxt = "n")
+    #  axis(1)
+    #  mtext(1, text = round(Obs, digits = 2), at = Obs, col = "white")
+    #  # Plot observed value
+    #  abline(v = Obs, col = "white")
+    #  legend("topright", legend = "observed value", text.col = "white", box.lty = 0)
+    #}
+    #else {
+    #  # Plot histogram of permuted values
+    #  h <- hist(v_perm, breaks = length(v_perm), xaxt = "n")
+    #  cuts <- cut(h$breaks, c(Obs, Inf))
+    #  cuts <- ifelse(is.na(cuts), "gray25", "gray10")
+    #  plot(h, col = cuts, border = cuts, xlab = paste(attributes(v_perm)$comment), xaxt = "n")
+    #  axis(1)
+    #  mtext(1, text = round(Obs, digits = 2), at = Obs, col = "white")
+    #  # Plot observed value
+    #  abline(v = Obs, col = "white")
+    #  legend("topright", legend = "observed value", text.col = "white", box.lty = 0)
+    #}
+    
+    vis.post.distribution(c(Obs, v_perm), legend = FALSE)
   }
   else {
     # Plot output configuration
@@ -68,7 +73,6 @@ post.dist <- function(v_perm, Obs = NULL, ncols = NULL, nrows = NULL) {
       if (ncol(v_perm) > 6 & ncol(v_perm) < 9) {
         par(mfrow = c(2, 4))
       }
-      # MARINE!!!!!!!!! C'EST A CORRIGER
       if(ncol(v_perm) > 9){return(warning("Number of permuted factors are higher than 9. Use ANTs function post.dist to plot them one by one."))}
     }
     else {
@@ -83,43 +87,44 @@ post.dist <- function(v_perm, Obs = NULL, ncols = NULL, nrows = NULL) {
       }
       else{obs=Obs[a]}
       m <- mean(v_perm[, a])
-      if (obs > m) {
-        # Plot histogram of permuted values
-        h <- hist(v_perm[, a], breaks = length(v_perm[, a]), plot = FALSE)
-        cuts <- cut(h$breaks, c(obs, Inf))
-        cuts <- ifelse(is.na(cuts), "gray10", "gray25")
-
-        # Plot observed value
-        if (obs < min(v_perm[, a])) {
-          xlim <- c(floor(obs / 0.1) * 0.1, ceiling(max(v_perm[, a]) / 0.1) * 0.1)
-          names(xlim) <- NULL
-          plot(h, col = cuts, border = cuts, xlim = xlim, main = paste(colnames(v_perm)[a]), xlab = NULL, xaxt = "n")
-        }
-        else {
-          plot(h, col = cuts, border = cuts, main = paste(colnames(v_perm)[a]), xlab = NULL, xaxt = "n")
-        }
-        axis(1, pos = 0)
-        # mtext(1, text = round(obs,digits=3), at = obs, col = "white")
-        abline(v = obs, col = "white")
-        legend("topleft", legend = paste("observed value", "\n", round(obs, digits = 3)), text.col = "white", box.lty = 0)
-      }
-      else {
-        # Plot histogram of permuted values
-        h <- hist(v_perm[, a], breaks = length(v_perm[, a]), plot = FALSE)
-        cuts <- cut(h$breaks, c(obs, Inf))
-        cuts <- ifelse(is.na(cuts), "gray25", "gray10")
-        # Plot observed value
-        if (obs > max(v_perm[, a])) {
-          plot(h, col = cuts, border = cuts, main = paste(colnames(v_perm)[a]), xlab = NULL, xlim = c(floor(v_perm[, a] / 0.1) * 0.1, ceiling(max(obs) / 0.1) * 0.1), xaxt = "n")
-        }
-        else {
-          plot(h, col = cuts, border = cuts, main = paste(colnames(v_perm)[a]), xlab = NULL, xaxt = "n")
-        }
-        axis(1, pos = 0)
-        # mtext(1, text = round(obs,digits=3), at = obs, col = "white")
-        abline(v = obs, col = "white")
-        legend("topright", legend = paste("observed value", "\n", round(obs, digits = 3)), text.col = "white", box.lty = 0)
-      }
+      #if (obs > m) {
+      #  # Plot histogram of permuted values
+      #  h <- hist(v_perm[, a], breaks = length(v_perm[, a]), plot = FALSE)
+      #  cuts <- cut(h$breaks, c(obs, Inf))
+      #  cuts <- ifelse(is.na(cuts), "gray10", "gray25")
+#
+      #  # Plot observed value
+      #  if (obs < min(v_perm[, a])) {
+      #    xlim <- c(floor(obs / 0.1) * 0.1, ceiling(max(v_perm[, a]) / 0.1) * 0.1)
+      #    names(xlim) <- NULL
+      #    plot(h, col = cuts, border = cuts, xlim = xlim, main = paste(colnames(v_perm)[a]), xlab = NULL, xaxt = "n")
+      #  }
+      #  else {
+      #    plot(h, col = cuts, border = cuts, main = paste(colnames(v_perm)[a]), xlab = NULL, xaxt = "n")
+      #  }
+      #  axis(1, pos = 0)
+      #  # mtext(1, text = round(obs,digits=3), at = obs, col = "white")
+      #  abline(v = obs, col = "white")
+      #  legend("topleft", legend = paste("observed value", "\n", round(obs, digits = 3)), text.col = "white", box.lty = 0)
+      #}
+      #else {
+      #  # Plot histogram of permuted values
+      #  h <- hist(v_perm[, a], breaks = length(v_perm[, a]), plot = FALSE)
+      #  cuts <- cut(h$breaks, c(obs, Inf))
+      #  cuts <- ifelse(is.na(cuts), "gray25", "gray10")
+      #  # Plot observed value
+      #  if (obs > max(v_perm[, a])) {
+      #    plot(h, col = cuts, border = cuts, main = paste(colnames(v_perm)[a]), xlab = NULL, xlim = c(floor(v_perm[, a] / 0.1) * 0.1, ceiling(max(obs) / 0.1) * 0.1), xaxt = "n")
+      #  }
+      #  else {
+      #    plot(h, col = cuts, border = cuts, main = paste(colnames(v_perm)[a]), xlab = NULL, xaxt = "n")
+      #  }
+      #  axis(1, pos = 0)
+      #  # mtext(1, text = round(obs,digits=3), at = obs, col = "white")
+      #  abline(v = obs, col = "white")
+      #  legend("topright", legend = paste("observed value", "\n", round(obs, digits = 3)), text.col = "white", box.lty = 0)
+      #}
+      vis.post.distribution(c(obs, v_perm[]), legend = FALSE)
     }
   }
 }
