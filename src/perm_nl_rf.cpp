@@ -47,7 +47,7 @@ List perm_nl_rf(List ldf, NumericVector lables, int nperm, bool progress) {
         n=lables[b]-1;
         
         // Extract the column
-        SEXP vec_all=d1[n];
+        SEXP vec_all= d1[n];
         vec_all=vec_sample_all(vec_all);
        
         

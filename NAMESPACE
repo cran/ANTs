@@ -10,10 +10,8 @@ importFrom("stats", ".getXlevels", "binomial", "cor", "fitted",
 importFrom("methods","setGeneric","is")
 importFrom("utils", "read.csv","write.csv","browseURL")
 importFrom("Kendall","Kendall")
-importFrom("tcltk","tktoplevel","tkwm.state","tkimage.create","tcl","tklabel",
-           "tkcheckbutton","tclVar","tkconfigure","tclvalue","tkdestroy","tkbutton",
-           "tkgrid","tkwait.window","tclServiceMode","tktitle")
 importFrom("gtools","even")
+importFrom("rstudioapi","jobRunScript","isAvailable", "jobRemove")
 
 export(ant)
 export(assoc.gfi)

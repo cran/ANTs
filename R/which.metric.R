@@ -12,5 +12,5 @@ which.metric <- function(){
   file.copy(tmpFile, paste0(tempdir,"/ANTs which metric.html"), overwrite = TRUE)
   browseURL(paste(system.file(package = "ANTs"),
                   "/www/ANTs which metric.html", sep = ''))
-  # .Tcl("update") for tcltk window function
+
 }

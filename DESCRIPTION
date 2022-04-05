@@ -2,7 +2,7 @@ Package: ANTs
 Date: 2022-03-23
 Type: Package
 Title: Animal Network Toolkit Software
-Version: 0.0.14
+Version: 0.0.15
 Authors@R: c(
   person("Sosa", "Sebastian", email = "s.sosa@live.fr", role = c("aut", "cre")),
   person("Puga-Gonzalez", "Ivan", role = c("aut")), 
@@ -16,7 +16,7 @@ URL: www.s-sosa.com/softwares or https://github.com/SebastianSosa/ANTs
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.5.0)
-Imports: lme4,methods,Kendall,gtools
+Imports: lme4,methods,Kendall,gtools,rstudioapi
 LinkingTo: Rcpp,RcppArmadillo,RcppEigen
 SystemRequirements: C++11
 RoxygenNote: 7.1.2
@@ -24,7 +24,7 @@ BugReports: https://github.com/SebastianSosa/ANTs
 Suggests: testthat, knitr, rmarkdown, markdown
 VignetteBuilder: knitr
 NeedsCompilation: yes
-Packaged: 2022-03-23 21:11:19 UTC; SSosa
+Packaged: 2022-04-05 07:44:46 UTC; SSosa
 Author: Sosa Sebastian [aut, cre],
   Puga-Gonzalez Ivan [aut],
   Hu Feng He [aut],
@@ -33,4 +33,4 @@ Author: Sosa Sebastian [aut, cre],
   Sueur Cedric [aut]
 Maintainer: Sosa Sebastian <s.sosa@live.fr>
 Repository: CRAN
-Date/Publication: 2022-03-23 23:10:06 UTC
+Date/Publication: 2022-04-05 09:30:09 UTC

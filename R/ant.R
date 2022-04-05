@@ -114,7 +114,24 @@ setGeneric(name = "ant", ant <- function(x, progress = FALSE) {
     }
 
     # Check if argument x is an ANTs object from function stat.lm, stat.glm or stat.glmm----------------------
-    if (attr(x, "class") == "ant lm" | attr(x, "class") == "ant glm" | attr(x, "class") == "ant glmm") {
+    if (attr(x, "class") == "ant lm" | attr(x, "class") == "ant glm" | attr(x, "class") == "ant glmm"
+        | attr(x, "class") == "ant glmm parallel") {
+
+      if(attr(x, "class") == "ant glmm parallel"){
+        result = NULL
+        for (a in 1:length(x[[1]])) {
+          rstudioapi::jobRemove(x[[2]][a])# remove jobs
+          if(a == 1){
+            result = get(x[[1]][a], envir = .GlobalEnv)
+          }else{
+            result$permutations = rbind(result$permutations,
+                                        get(x[[1]][a], envir = .GlobalEnv)$permutations)
+          }
+          rm(list = (x[[1]][a]) , envir = .GlobalEnv)# remove created data
+        }
+        x = result
+      }
+      
       # Extract original model----------------------
       s <- x$Original.model
 

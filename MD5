@@ -1,7 +1,7 @@
-9eb53f4630dbe3eb4bcde05d2f9ccd7e *DESCRIPTION
-eeb63071a7d2b77a511b40812cdee7f5 *NAMESPACE
+b4e8677126642ba2dcf53532590b6585 *DESCRIPTION
+c21ec9fc9479a679bf891a070126b702 *NAMESPACE
 70de50e8cf9dbd46733da0a07f806735 *R/RcppExports.R
-737c3226ea4bed4250d90eb3fa843bdb *R/ant.R
+237db51780b04454e71553cafcb0acd3 *R/ant.R
 f980c43eb740ac09887100197e448d50 *R/assoc.gfi.R
 df012af25ab3f2732cf52a6636ca3f74 *R/assoc.indices.R
 8de88a725de75d9aaa57b9eb765c432c *R/check.df.R
@@ -82,7 +82,7 @@ a4fca08d3f93c4810e45bfa3102e4e0c *R/perm.double.focal.R
 1a3326c539ef5adc83dc875c74ed9676 *R/perm.double.focal.single.R
 854e63832fed3a5dbc6c831aa7184b7f *R/perm.double.grp.R
 3e1d3102b919182ec49e51fed1516c9e *R/perm.double.grp.single.R
-4995438555c5e48ad7a1632b6d4e4c17 *R/perm.ds.focal.R
+3493eea11d29341892c643f720d24400 *R/perm.ds.focal.R
 c7a9a81e5259e937197cc2ae40627268 *R/perm.ds.grp.R
 0e467045eece01b68a53a324d02600ce *R/perm.edgl.R
 d9aaa7aea0f4d9032be5ca8f801e69d5 *R/perm.net.degree.R
@@ -90,7 +90,7 @@ bf261fafdcbfa5fe75d5fadb46eb4ee7 *R/perm.net.links.R
 a8c4e703c69b471785ca505f6c92bff3 *R/perm.net.links.single.R
 58101c8caa9d8e57d4733dd7e59f2440 *R/perm.net.lk.w.R
 31989602c654ef0201cedf0a10422931 *R/perm.net.nl.R
-70c60acac4058569f5debe4cde53e276 *R/perm.net.nl.str.R
+f79f29d152e50977c78d593bb9889aec *R/perm.net.nl.str.R
 be2bf0b18328bdd8601bd4c0d41ecc9c *R/perm.net.weigths.R
 21fb4acee0ea3a40f0075b1ae0213848 *R/perm.nodeLabel.R
 32947e3d051e99c88acd12d48e25f650 *R/perm.p.R
@@ -120,7 +120,9 @@ b1be82d53b3069f9743eb956d25fb811 *R/sim.m.R
 5a32da1b222cc476f19e61a08ff3e538 *R/stat.deletions.R
 2207a1c7870bc4a5a476df690568f8c8 *R/stat.deletionsPlot.R
 a13d8bffbfd0525c0bc4f11eb403648a *R/stat.glm.R
-04200bab9c03eaaf8e22a53851b3dace *R/stat.glmm.R
+c79357e89ad1ca0064c57c092ddade0e *R/stat.glmm.R
+d51ac2175697b2fe3afa32d993023639 *R/stat.glmm.no.first.model.R
+e31d370f6d6666b6d4de1b300bb6631d *R/stat.glmm.parallel2.R
 1dddc979d03a75cb2609a34158b9e102 *R/stat.lm.R
 ccf00779649c0fc9b0992d7185a69b83 *R/stat.model.diag.R
 e1039d64340c8e9a9e930914bc38d1a0 *R/stat.p.R
@@ -134,7 +136,7 @@ ed7d315ae2c11a319df6d24713f9f802 *R/stat.tauKrSimple.R
 e7a2f7b38b0299bf9774c9fa1e09dc0d *R/time.heterogeneity.R
 b1320858078342a9490ccd0ab0fc94fd *R/vis.post.distribution.R
 d5673709cf20c3192b8dbe2a774a99d9 *R/vis.post.distribution2.R
-271bf826175b11ab72962183e892fe3d *R/which.metric.R
+55f35d5c1dea5040c01e0cacd9ae6254 *R/which.metric.R
 552febb5a20e8541b15db1e56c7596a6 *R/which.protocol.R
 19e477684a55d716c00e4870e254668e *build/vignette.rds
 27a436d285b10f4b9ebbc357890081a7 *data/sim.df.RData
@@ -260,7 +262,7 @@ d6595963f039a3ae9c77918590f423e7 *man/perm.double.focal.Rd
 7178601c24fd8f627e886ccceef9aa20 *man/perm.double.focal.single.Rd
 dd32b81450c2129d3b948d7ee444c521 *man/perm.double.grp.Rd
 035ca1c105f94eed6d528298ced99e03 *man/perm.double.grp.single.Rd
-637089e982090088b1ef02bd042fed62 *man/perm.ds.focal.Rd
+d36616efe2042387946dc60b3abb1fee *man/perm.ds.focal.Rd
 798b221fccef1153ad2595087d8cdf8f *man/perm.ds.grp.Rd
 4d46fb6c57ea3aef05d88037b1459e4c *man/perm.edgl.Rd
 75012ed4bb17b3f43a94c68acac017d4 *man/perm.met.degree.single.Rd
@@ -312,7 +314,9 @@ d0192500157cba77eb1b66003885dcf1 *man/stat.ci.Rd
 ebc1437724fd0a0dbede8e84004f4e65 *man/stat.deletions.Rd
 78882183d2a05b2c5d5ef0c27f93e4d7 *man/stat.deletionsPlot.Rd
 bd810503e2a99b77416b99fdba5c28b8 *man/stat.glm.Rd
-d007cdb4cf3991d2e3a0ebeed332c984 *man/stat.glmm.Rd
+3ccfd9df7e58ad75884e2afba1e22a8e *man/stat.glmm.Rd
+8468a693eba07ab918ff8947e6253b50 *man/stat.glmm.no.first.model.Rd
+651c8dae210fb52d4a7b508b351231ef *man/stat.glmm.parallel.Rd
 73dad84b112d92e38da57704695daba4 *man/stat.lm.Rd
 e32488a2628f6391696b7251d3b925ea *man/stat.model.diag.Rd
 13e2ce66312ee9d36d034f28506fb478 *man/stat.p.Rd
@@ -348,9 +352,9 @@ ac2f3ee96b3e0644c7b591e3c6db4bf4 *man/which_equal.Rd
 2a6f9e9e044a78154d3cfda5936d6f48 *src/Makevars
 2a6f9e9e044a78154d3cfda5936d6f48 *src/Makevars.win
 d56d2f375d015d168bb74f7baea6e3ec *src/RcppExports.cpp
-4943d364c46913a794295c6bfd1fecd0 *src/assoc_mat.cpp
-be3df8fd6b64c4ffdb17e3a66fa947b9 *src/assoc_mat_full.cpp
-227a1cb7cd77740452d1614380f19d39 *src/assoc_mat_one_id.cpp
+da83811519ef9eaec77388679aa823d9 *src/assoc_mat.cpp
+2401a67d329f35b33390a43881068888 *src/assoc_mat_full.cpp
+fd7fc69581cfa9de17abc15033ab8500 *src/assoc_mat_one_id.cpp
 e95fe963270d498b73098ba70944c080 *src/df_merge.cpp
 44fcea0c0186f4f986ce953528043bc9 *src/df_to_gbi.cpp
 3676c19108c8db8ffe872988c4433bbb *src/edgl_to_matrix.cpp
@@ -396,7 +400,7 @@ a7cd550f309b11fd63be593d7c546973 *src/met_strength.cpp
 18da2af01b6ffcfc41f5c4e2dbd408b4 *src/perm_matVec.cpp
 e898624f670b4a746167862b84298e34 *src/perm_mat_col_row.cpp
 135605ff460201dc02d6735a8738b62e *src/perm_net_weigths.cpp
-b70701619f8a0efbd602c1e6cf1b8f4d *src/perm_nl_rf.cpp
+978539ebd9323a17dc9fced19395f2ff *src/perm_nl_rf.cpp
 49d655806f5b4f74547ea369581c4aed *src/perm_nodeLabels.cpp
 35e3917b71d71d92114ece167f4be9dc *src/perm_vec_factor.cpp
 25edae575f556a18e29e4107e31cffcb *src/perm_vec_int.cpp

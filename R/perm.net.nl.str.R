@@ -58,8 +58,7 @@ perm.net.nl.str <- function(df, labels, rf=NULL, nperm, progress = TRUE){
           # Premute the rows
           ldf[[b]] = perm.net.nl.str.single(df = df, labels = labels)
         }
-        cat("\n")
-        
+
         # Merge result
         t = do.call('rbind', ldf)
         # Remove column of rf create to split the data frame

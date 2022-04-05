@@ -4,7 +4,7 @@
 \alias{stat.glmm}
 \title{Extracts statistical measures of interest in Generalized Linear Mixed Models}
 \usage{
-stat.glmm(ant, formula, family, oda = NULL, progress = TRUE, ...)
+stat.glmm(ant, formula, family, oda = NULL, progress = TRUE, ncores = 1, ...)
 }
 \arguments{
 \item{ant}{an output of ANT function \code{\link{perm.net.nl}} with random factor stated, or output of ANT 'met' categories functions in which output of ANT functions \code{\link{perm.ds.focal}}, \code{\link{perm.ds.grp}} or \code{\link{perm.net.lk}} where multiple matrices have been used.}
@@ -16,6 +16,8 @@ stat.glmm(ant, formula, family, oda = NULL, progress = TRUE, ...)
 \item{oda}{the original data frame of associations when argument ant is obtained with perm.ds.grp or perm.ds.focal ANT functions.}
 
 \item{progress}{a boolean indicating the visualization of the permutation process.}
+
+\item{ncores}{an integer indicating the number of jobs to create for parallelization.}
 
 \item{...}{Extra arguments for \code{\link[lme4]{lmer}} or \code{\link[lme4]{glmer}} function only.}
 }
@@ -53,6 +55,8 @@ t=met.strength(sim.lm,sim.ldf,1)
 t=perm.net.nl(t,labels='age',rf="period",nperm=10,progress=FALSE) 
 # Permuted GLMM-------------------------------------------------------------
 r.glmm=stat.glmm(ant = t,formula = strength ~ age + (1|id),family = gaussian(), progress=TRUE)
+# Rstudio parallelization.----------------------------
+ \dontrun{r.glmm=stat.glmm(t,formula = strength ~ age + (1|id),family = gaussian(), ncores = 10)}
 }
 \seealso{
 \code{\link[lme4]{lmer}} or \code{\link[lme4]{glmer}}
