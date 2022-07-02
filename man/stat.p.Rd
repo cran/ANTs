@@ -49,8 +49,6 @@ Sosa, S. (2018). Social Network Analysis, \emph{in}: Encyclopedia of Animal Cogn
 }
 \author{
 Sebastian Sosa, Ivan Puga-Gonzalez.
-
-Sebastian Sosa, Ivan Puga-Gonzalez.
 }
 \keyword{interanl}
 \keyword{internal}

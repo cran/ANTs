@@ -1,4 +1,4 @@
-b4e8677126642ba2dcf53532590b6585 *DESCRIPTION
+2823cfc269194a0496984f7f6fb16b35 *DESCRIPTION
 c21ec9fc9479a679bf891a070126b702 *NAMESPACE
 70de50e8cf9dbd46733da0a07f806735 *R/RcppExports.R
 237db51780b04454e71553cafcb0acd3 *R/ant.R
@@ -319,7 +319,7 @@ bd810503e2a99b77416b99fdba5c28b8 *man/stat.glm.Rd
 651c8dae210fb52d4a7b508b351231ef *man/stat.glmm.parallel.Rd
 73dad84b112d92e38da57704695daba4 *man/stat.lm.Rd
 e32488a2628f6391696b7251d3b925ea *man/stat.model.diag.Rd
-13e2ce66312ee9d36d034f28506fb478 *man/stat.p.Rd
+474f127ba9d60ecef16f98ef58ac4cea *man/stat.p.Rd
 0c09ebd5f496d52a1013410c821191a6 *man/stat.t.Rd
 1ac17e33c9c0eb37e30a37d32d74f7a3 *man/stat.tauKr.Rd
 c340bb404351d6849612cb87494f7481 *man/stat.tauKrPartial.Rd
@@ -360,7 +360,7 @@ e95fe963270d498b73098ba70944c080 *src/df_merge.cpp
 3676c19108c8db8ffe872988c4433bbb *src/edgl_to_matrix.cpp
 dd644feca24526954f4fdaa3270af400 *src/euclidean.cpp
 bd172f04c92492c4ab2ecce53f6d5e54 *src/gbi_createEmpty.cpp
-14a5a52180e4724c829dbe91c0e1c2f3 *src/init.c
+3709cd1a04d2c0fe982b3419bc2bdbe1 *src/init.c
 2f046102916644d84bf08154adebec15 *src/laplacian_energy_degrees.cpp
 48cb694f8b2e198c551ffdd71f28471d *src/ldf_merge.cpp
 1a63e3bf986f03dc882771634c0f264d *src/listDf_merge_single_column.cpp
